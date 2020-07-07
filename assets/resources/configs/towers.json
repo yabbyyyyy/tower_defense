@@ -1,0 +1,68 @@
+{
+  "tower_a": {
+    "name": "TowerA",
+    "element": "fire",
+    "levels": [
+      {
+        "sprite": "tower_a_1",
+        "atk": 5,
+        "atk_range": 300,
+        "view_range": 400,
+        "aspd": 1.5,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 1500
+      },
+      {
+        "sprite": "tower_a_2",
+        "atk": 10,
+        "atk_range": 300,
+        "view_range": 400,
+        "aspd": 1.5,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 1500
+      },
+      {
+        "sprite": "tower_a_3",
+        "atk": 10,
+        "atk_range": 400,
+        "view_range": 400,
+        "aspd": 2.0,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 1500
+      }
+    ]
+  },
+  "tower_b": {
+    "name": "TowerB",
+    "element": "fire",
+    "levels": [
+      {
+        "sprite": "tower_b_1",
+        "atk": 50,
+        "atk_range": 600,
+        "view_range": 700,
+        "aspd": 0.3,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 900
+      },
+      {
+        "sprite": "tower_b_2",
+        "atk": 100,
+        "atk_range": 600,
+        "view_range": 700,
+        "aspd": 0.3,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 900
+      },
+      {
+        "sprite": "tower_b_3",
+        "atk": 150,
+        "atk_range": 700,
+        "view_range": 700,
+        "aspd": 0.35,
+        "bullet_sprite": "bullet",
+        "bullet_speed": 900
+      }
+    ]
+  }
+}
