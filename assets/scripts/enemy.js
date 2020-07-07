@@ -18,6 +18,10 @@ cc.Class({
 			default: null,
 			type: cc.Sprite,
 		},
+		healthBar: {
+			default: null,
+			type: cc.ProgressBar,
+		},
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -38,6 +42,7 @@ cc.Class({
 		});
 		// basic attributes
 		this.hp = data.hp;
+		this.maxHp = data.hp;
 		this.defense = data.defense;
 		this.speed = data.speed;
 		
@@ -48,6 +53,7 @@ cc.Class({
 		this.findDirection(pathPoints[1].position);
 		this.setState(EnemyState.Move);
 		this.node.opacity = 255;
+		this.healthBar.node.active = false;
 	},
 	
 	update: function (dt) {
@@ -85,8 +91,6 @@ cc.Class({
 		switch (state) {
 		case EnemyState.Undefined:
 		case EnemyState.Idle:
-			this.node.opacity = 0;
-			break;
 		case EnemyState.Move:
 			break;
 		case EnemyState.Goal:
@@ -109,6 +113,8 @@ cc.Class({
 	
 	damage: function (atk) {
 		this.hp -= atk - this.defense;
+		this.healthBar.node.active = true;	
+		this.healthBar.progress = Math.max(this.hp, 0)/this.maxHp;
 		if (this.hp <= 0) {
 			this.setState(EnemyState.Dead);
 		}

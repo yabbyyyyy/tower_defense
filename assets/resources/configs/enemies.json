@@ -3,7 +3,7 @@
     "name": "mushroom_0",
     "sprite": "mushroom_0",
     "speed": 50,
-    "hp": 10,
+    "hp": 15,
     "defense": 0
   },
   "1": {
