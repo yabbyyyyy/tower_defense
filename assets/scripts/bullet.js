@@ -22,9 +22,8 @@ cc.Class({
 
     onLoad: function () {},
 	
-	fire: function (target, sprite, speed, hit) {
+	fire: function (target, hit, sprite) {
 		this.spriteNode.spriteFrame = sprite;
-		this.speed = speed;
 		this.target = target;
 		this.hit = hit;
 		this.setState(BulletState.Move);
@@ -36,7 +35,7 @@ cc.Class({
 			let dvec = this.target.position.sub(this.node.position);
 			this.node.angle = -cc.v2(dvec.x, dvec.y).signAngle(cc.v2(0, 1))/Math.PI*180.;
 			let dist = dvec.mag();
-			let moved = dt*this.speed;
+			let moved = dt*this.hit.bullet_speed;
 			
 			if (moved >= dvec.mag()) {
 				this.node.position = this.target.position;
