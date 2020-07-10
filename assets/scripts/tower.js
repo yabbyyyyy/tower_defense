@@ -45,12 +45,12 @@ cc.Class({
 
 		this.level = level;
 		let ldata = this.levelData[level];
-		this.atk = ldata.atk;
 		this.range = ldata.atk_range;
 		this.view = ldata.view_range;
 		this.aspd = ldata.aspd;
 		this.bulletSpeed = ldata.bullet_speed;
-
+		this.hit = {};
+		this.hit.atk = ldata.atk;
 
 		cc.loader.loadRes(ldata.sprite, cc.SpriteFrame, (err, result) => {
 			if (err) {
@@ -115,7 +115,7 @@ cc.Class({
 		if (this.attackTimer >= 1./this.aspd) {
 			this.attackTimer = 0.;
 			let bullet = cc.instantiate(this.bulletPrefab);
-			bullet.getComponent("bullet").fire(target, this.bulletSprite, this.bulletSpeed, this.atk);
+			bullet.getComponent("bullet").fire(target, this.bulletSprite, this.bulletSpeed, this.hit);
 			bullet.position = this.node.position.add(target.position.sub(this.node.position).normalize().mul(100));
 			bullet.angle = this.node.angle;
 			bullet.parent = this.node.parent;

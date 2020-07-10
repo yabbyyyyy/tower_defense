@@ -22,11 +22,11 @@ cc.Class({
 
     onLoad: function () {},
 	
-	fire: function (target, sprite, speed, atk) {
+	fire: function (target, sprite, speed, hit) {
 		this.spriteNode.spriteFrame = sprite;
 		this.speed = speed;
 		this.target = target;
-		this.atk = atk;
+		this.hit = hit;
 		this.setState(BulletState.Move);
 		global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
 	},
@@ -65,7 +65,7 @@ cc.Class({
 		case BulletState.Goal:
 			this.node.destroy();
 			if (this.target) {
-				this.target.getComponent("enemy").damage(this.atk);
+				this.target.getComponent("enemy").damage(this.hit);
 			}
 		default:
 			break;
