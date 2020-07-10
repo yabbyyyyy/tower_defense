@@ -106,7 +106,7 @@ cc.Class({
 		// search for enemy
 		var search = (enemies, range) => {
 			for (var enemy of enemies) {
-				if ((enemy != undefined) && (this.node.position.sub(enemy.position).mag() <= range)) {
+				if ((enemy != undefined) && (this.node.position.sub(enemy.node.position).mag() <= range)) {
 					this.setEnemy(enemy);
 					return true;
 				}
@@ -121,17 +121,17 @@ cc.Class({
 	
 	setEnemy: function (enemy) {
 		this.enemy = enemy;
-		global.event.register("enemy" + this.enemy.nid, () => { this.enemy = undefined; });
+		global.event.register("enemy" + enemy.nid, () => { this.enemy = undefined; });
 		// this.attackTimer = 0.;
 	},
 		
 	update: function (dt) {
 		this.attackTimer += dt;
 		if (this.enemy != undefined) {
-			let direction = this.node.position.sub(this.enemy.position);
+			let direction = this.node.position.sub(this.enemy.node.position);
 			this.node.angle = -cc.v2(direction.x, direction.y).signAngle(cc.v2(0, -1))/Math.PI*180.;
 			
-			if (this.node.position.sub(this.enemy.position).mag() > this.prop.range) {
+			if (this.node.position.sub(this.enemy.node.position).mag() > this.prop.range) {
 				this.enemy = undefined;
 			} else {
 				this.attack(this.enemy);
@@ -144,7 +144,7 @@ cc.Class({
 			this.attackTimer = 0.;
 			let bullet = cc.instantiate(this.bulletPrefab);
 			bullet.getComponent("bullet").fire(target, this.prop, this.bulletSprite);
-			bullet.position = this.node.position.add(target.position.sub(this.node.position).normalize().mul(100));
+			bullet.position = this.node.position.add(target.node.position.sub(this.node.position).normalize().mul(100));
 			bullet.angle = this.node.angle;
 			bullet.parent = this.node.parent;
 		}

@@ -2,6 +2,8 @@
 
 const BattleController = function (obj) {
 
+    let field = null;
+
     obj.atk_interval = function (aspd) {
         return 1./aspd;
     };

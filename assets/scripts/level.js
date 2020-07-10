@@ -20,15 +20,15 @@ cc.Class({
 			default: [],
 			type: cc.Node
 		},
-		towerPrefabs: {
-			default: [],
-			type: cc.Prefab
-		},
 		buildMenuPrefab: {
 			default: null,
 			type: cc.Prefab
 		},
 		upgradeMenuPrefab: {
+			default: null,
+			type: cc.Prefab
+		},
+		towerPrefab: {
 			default: null,
 			type: cc.Prefab
 		},
@@ -52,6 +52,7 @@ cc.Class({
 		global.event.register("upgrade_tower", this.upgradeTower.bind(this));
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
+		global.battle.field = this;
 	},
 	
 	configure: function (levelConf, enemyConf, towerConf) {
@@ -122,7 +123,7 @@ cc.Class({
 		// cc.log("build tower " + data);
 		let node = this.closeMenu();
 		// use single type for now
-		let tower = cc.instantiate(this.towerPrefabs[0]);
+		let tower = cc.instantiate(this.towerPrefab);
 		// cc.log(data + ", " + JSON.stringify(this.towersData[data]));
 		tower.getComponent("tower").configure(this.towersData[data], node.position);
 		tower.parent = this.node;
@@ -163,13 +164,18 @@ cc.Class({
 		this.waveTimer = 0;
 		if (this.enemyCount < this.currWave.count) {
 			let enemy = cc.instantiate(this.enemyPrefab);
-			// initialize enemy
 			let enemyData = this.enemiesData[this.currWave.id];
+			let enemyScript = enemy.getComponent("enemy");
+
+			// register enemy with an ID
 			let nid = this.enemiesList.length;
-			enemy.getComponent("enemy").configure(nid, enemyData, this.enemyRouteNodes);
-			enemy.parent = this.node;
-			this.enemiesList.push(enemy);
+			enemyScript.configure(nid, enemyData, this.enemyRouteNodes);
+
+			// add an event for removing this enemy
+			this.enemiesList.push(enemyScript);
 			global.event.register("enemy" + nid, (nid) => { this.enemiesList[nid] = undefined; });
+			// increment of count
+			enemy.parent = this.node;
 			this.enemyCount++;
 		} else {
 			this.wave++;
@@ -185,7 +191,7 @@ cc.Class({
 	
 	enemyGoal: function () {
 		this.life--;
-		cc.log(this.life);
+		cc.log("Life left: " + this.life);
 	},
 	
 	update: function (dt) {

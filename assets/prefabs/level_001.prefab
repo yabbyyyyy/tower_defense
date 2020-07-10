@@ -2026,19 +2026,14 @@
         "__id__": 53
       }
     ],
-    "towerPrefabs": [
-      {
-        "__uuid__": "2742cdfa-b117-401f-a22c-5430e469a93b"
-      },
-      {
-        "__uuid__": "8793f2c0-8082-424d-8f60-824dae9c12d0"
-      }
-    ],
     "buildMenuPrefab": {
       "__uuid__": "b53e5b41-fc65-4f91-82a1-2dc3c7ebe4fe"
     },
     "upgradeMenuPrefab": {
       "__uuid__": "68ea980c-c157-45f6-b9b0-625f794ba943"
+    },
+    "towerPrefab": {
+      "__uuid__": "2742cdfa-b117-401f-a22c-5430e469a93b"
     },
     "enemyPrefab": {
       "__uuid__": "84e98724-7979-4964-bdd4-5459fb3eb053"

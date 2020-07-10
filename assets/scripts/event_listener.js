@@ -33,7 +33,11 @@ const EventListener = function (obj) {
 	
 	obj.off = function (name) {
 		delete obj[name];
-	}
+	};
+	
+	obj.clear = function () {
+		Register = {};
+	};
 	
 	return obj;
 }

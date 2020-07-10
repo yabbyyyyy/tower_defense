@@ -32,13 +32,13 @@ cc.Class({
 	
 	update: function (dt) {
 		if (this.target) {
-			let dvec = this.target.position.sub(this.node.position);
+			let dvec = this.target.node.position.sub(this.node.position);
 			this.node.angle = -cc.v2(dvec.x, dvec.y).signAngle(cc.v2(0, 1))/Math.PI*180.;
 			let dist = dvec.mag();
 			let moved = dt*this.hit.bullet_speed;
 			
 			if (moved >= dvec.mag()) {
-				this.node.position = this.target.position;
+				this.node.position = this.target.node.position;
 				this.setState(BulletState.Goal);
 			} else {
 				let dir = dvec.normalize();
@@ -64,7 +64,7 @@ cc.Class({
 		case BulletState.Goal:
 			this.node.destroy();
 			if (this.target) {
-				this.target.getComponent("enemy").damage(this.hit);
+				this.target.damage(this.hit);
 			}
 		default:
 			break;

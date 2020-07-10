@@ -31,7 +31,7 @@ cc.Class({
 	},
 	
 	configure: function (nid, data, pathPoints) {
-		this.node.nid = nid;
+		this.nid = nid;
 		// cc.log(JSON.stringify(data));
 		cc.loader.loadRes(data.sprite, cc.SpriteFrame, (err, result) => {
 			if (err) {
@@ -98,8 +98,8 @@ cc.Class({
 		// intended fall through
 		case EnemyState.Dead:
 			// notify destroy
-			global.event.trigger("enemy" + this.node.nid, this.node.nid);
-			global.event.off("enemy" + this.node.nid);
+			global.event.trigger("enemy" + this.nid, this.nid);
+			global.event.off("enemy" + this.nid);
 			this.node.destroy();
 		default:
 			break;
