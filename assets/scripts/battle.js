@@ -18,7 +18,7 @@ const BattleController = function (obj) {
         // show damage on UI layer
         let damageNum = Math.round(damage);
         if ((damageNum > 0) && (obj.uiLayer)) {
-            obj.uiLayer.showDamage(damageNum, target.node.position.add(cc.v2(0, 50)), 1.0, crit);
+            obj.uiLayer.showDamage(damageNum, target.node.position.add(cc.v2(0, 50)), 0.5, crit);
         }
         return damage;
     };
