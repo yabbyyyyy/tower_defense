@@ -59,7 +59,7 @@ cc.Class({
 
 		label.parent = this.node;
 		let action = cc.spawn(cc.fadeOut(duration), cc.moveBy(duration, cc.v2(0, 50)));
-		label.runAction(cc.sequence(action, cc.callFunc(label.removeFromParent, label)));
+		label.runAction(cc.sequence(action, cc.callFunc(label.destroy, label)));
 	},
 
     start () {

@@ -13,6 +13,7 @@ const default_prop = {
 	crit_mod: 100,
 	aoe: false,
 	aoe_range: 0,
+	lock: true,
 };
 
 function update_dict (my_hit, data) {
@@ -142,8 +143,8 @@ cc.Class({
 		if (this.attackTimer >= global.battle.atk_interval(this.prop.aspd)) {
 			this.attackTimer = 0.;
 			let bullet = cc.instantiate(this.bulletPrefab);
-			bullet.getComponent("bullet").fire(target, this.prop, this.bulletSprite);
-			bullet.position = this.node.position.add(target.node.position.sub(this.node.position).normalize().mul(100));
+			let bulletPos = this.node.position.add(target.node.position.sub(this.node.position).normalize().mul(100));
+			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletSprite);
 			bullet.angle = this.node.angle;
 			bullet.parent = this.node.parent;
 		}

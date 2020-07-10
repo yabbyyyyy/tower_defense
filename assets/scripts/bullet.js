@@ -22,30 +22,38 @@ cc.Class({
 
     onLoad: function () {},
 	
-	fire: function (target, hit, sprite) {
+	fire: function (pos, target, hit, sprite) {
+		this.node.position = pos;
 		this.sprite.spriteFrame = sprite;
 		this.target = target;
 		this.hit = hit;
 		this.setState(BulletState.Move);
+		this.setDestination(target.node.position);
 		global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
+	},
+
+	setDestination(position) {
+		this.dest = cc.v2(position.x, position.y);
 	},
 	
 	update: function (dt) {
-		if (this.target) {
-			let dvec = this.target.node.position.sub(this.node.position);
-			this.node.angle = -cc.v2(dvec.x, dvec.y).signAngle(cc.v2(0, 1))/Math.PI*180.;
-			let dist = dvec.mag();
+		// update destination
+		if (this.target && (this.hit.lock)) {
+			this.setDestination(this.target.node.position);
+		}
+
+		if (this.state == BulletState.Move) {
+			let dir = this.dest.sub(this.node.position).normalize();
+			this.node.angle = -dir.signAngle(cc.v2(0, 1))/Math.PI*180.;
 			let moved = dt*this.hit.bullet_speed;
-			
-			if (moved >= dvec.mag()) {
-				this.node.position = this.target.node.position;
+			let dist = this.dest.sub(this.node.position).mag();
+		
+			if (moved >= dist) {
+				this.node.position = this.dest;
 				this.setState(BulletState.Goal);
 			} else {
-				let dir = dvec.normalize();
 				this.node.position = this.node.position.add(dir.mul(moved));
 			}
-		} else {
-			this.setState(BulletState.Goal);
 		}
 	},
 	
@@ -66,6 +74,7 @@ cc.Class({
 			if (this.target) {
 				this.target.damage(this.hit);
 			}
+			break;
 		default:
 			break;
 		}

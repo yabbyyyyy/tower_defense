@@ -30,10 +30,15 @@ cc.Class({
 		let hbarNode = cc.instantiate(this.healthBarPrefab);
 		this.hbar = hbarNode.getComponent(cc.ProgressBar);
 
+		// configure health bar
 		hbarNode.zIndex = 1;
-		hbarNode.width = this.sprite.node.width;
-		this.hbar.totalLength = this.sprite.node.width;
+		let hwidth = this.sprite.node.width;
+		hbarNode.width = hwidth;
+		this.hbar.totalLength = hwidth;
+		hbarNode.getChildByName("bar").position = cc.v3(-hwidth/2., 0, 0);
+		this.hbar.progress = 1.0;
 
+		// hide health bar first
 		hbarNode.active = false;
 		this.updateHbarPos();
 
