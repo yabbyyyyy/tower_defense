@@ -9,12 +9,17 @@ cc.Class({
 		countDownLabel: {
 			default: null,
 			type: cc.Label,
-		}
+		},
+		damageLabel: {
+			default: null,
+			type: cc.Prefab,
+		},
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
+		global.battle.uiLayer = this;
 		this.now = 3;
 	},
 
@@ -31,6 +36,29 @@ cc.Class({
 				}
 			}
 		}
+	},
+
+	showDamage: function (damage, position, duration=1.0, crit=false) {
+		let label = cc.instantiate(this.damageLabel);
+		label.position = position;
+
+		let labelScript = label.getComponent(cc.Label);
+		
+		if (crit) {
+			labelScript.string = damage + "!";
+			label.color = new cc.Color(255, 215, 0);
+			labelScript.fontSize = 50;
+			labelScript.lineHeight = 50;
+		} else {
+			labelScript.string = damage;
+			labelScript.fontSize = 40;
+			labelScript.lineHeight = 40;
+		}
+
+
+		label.parent = this.node;
+		let action = cc.spawn(cc.fadeOut(duration), cc.moveBy(duration, cc.v2(0, 50)));
+		label.runAction(cc.sequence(action, cc.callFunc(label.removeFromParent, label)));
 	},
 
     start () {

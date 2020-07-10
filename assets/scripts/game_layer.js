@@ -1,13 +1,10 @@
 // game layer script
+import global from './global'
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-		levelPrefabs: {
-			default: [],
-			type: cc.Prefab
-		},
 		levelsConfig: {
 			default: null,
 			type: cc.JsonAsset,
@@ -20,6 +17,10 @@ cc.Class({
 			default: null,
 			type: cc.JsonAsset,
 		},
+		levelPrefabs: {
+			default: [],
+			type: cc.Prefab
+		},
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -28,6 +29,10 @@ cc.Class({
 		let level = cc.instantiate(this.levelPrefabs[0]);
 		level.getComponent("level").configure(this.levelsConfig.json[level.name], this.enemiesConfig.json, this.towersConfig.json);
 		level.parent = this.node;
+	},
+
+	showDamage: function (damage, position) {
+
 	},
 
     start () {

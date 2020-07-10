@@ -409,11 +409,6 @@
       "__id__": 7
     },
     "_enabled": true,
-    "levelPrefabs": [
-      {
-        "__uuid__": "6a7f06d7-c36c-49e3-8302-6579ad961899"
-      }
-    ],
     "levelsConfig": {
       "__uuid__": "da0659a9-0ffc-4473-baa9-264e445703dd"
     },
@@ -423,6 +418,11 @@
     "towersConfig": {
       "__uuid__": "8a608e57-0fa5-4edb-a1c4-98573ebd6027"
     },
+    "levelPrefabs": [
+      {
+        "__uuid__": "6a7f06d7-c36c-49e3-8302-6579ad961899"
+      }
+    ],
     "_id": "09CuTdzNxJwq6NYtUXgmP0"
   },
   {
@@ -585,6 +585,9 @@
     "_enabled": true,
     "countDownLabel": {
       "__id__": 11
+    },
+    "damageLabel": {
+      "__uuid__": "34bb061c-5783-42d7-bdd2-20258ea54b8e"
     },
     "_id": "e6y1x3ja1FkKqRz6DafPFe"
   },
