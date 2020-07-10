@@ -68,12 +68,11 @@ cc.Class({
 		this.level = level;
 		let ldata = this.levelData[level];
 
-		// update property
+		// copy initial property
 		if (!this.hasOwnProperty("prop")) {
-			this.prop = default_prop;
+			this.prop = Object.assign({}, default_prop);
 		}
 		this.prop = update_dict(this.prop, ldata);
-
 		// update sprite
 		if (ldata.hasOwnProperty("sprite")) {
 			cc.loader.loadRes(ldata.sprite, cc.SpriteFrame, (err, result) => {

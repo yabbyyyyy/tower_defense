@@ -1,33 +1,11 @@
 // level script
 import global from './global'
-const BaseState = {
-	Invalid: -1,
-	Empty: 0,
-	BuiltTower: 1,
-	Menu: 21,
-	UpgradeMenu: 22,
-};
+
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-		enemyRouteNodes: {
-			default: [],
-			type: cc.Node
-		},
-		towerBaseNodes: {
-			default: [],
-			type: cc.Node
-		},
-		buildMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
-		upgradeMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
 		towerPrefab: {
 			default: null,
 			type: cc.Prefab
@@ -41,15 +19,12 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-		// set touch event for each tower base
-		for (var node of this.towerBaseNodes) {
-			this.setState(node, BaseState.Empty);
-			this.setTouchEvent(node);
+		// pass this script to the base
+		this.bases = this.node.getChildByName("bases").getChildren();
+		this.routes = this.node.getChildByName("routes").getChildren();
+		for (var base of this.bases) {
+			base.getComponent("base").levelScript = this;
 		}
-		// console.log(this.towerBaseNodes.length);
-		global.event.register("build_tower", this.buildTower.bind(this));
-		global.event.register("sell_tower", this.sellTower.bind(this));
-		global.event.register("upgrade_tower", this.upgradeTower.bind(this));
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
 		global.battle.field = this;
@@ -62,93 +37,15 @@ cc.Class({
 		this.towersData = towerConf;
 		this.enemiesList = [];
 	},
-
-	setTouchEvent: function (node) {
-		node.on(cc.Node.EventType.TOUCH_START, (event) => {
-			// check state and call the corresponding menu
-			switch (node.state) {
-			case BaseState.Empty:
-				this.showMenu(node, this.buildMenuPrefab);
-				break;
-			case BaseState.BuiltTower:
-				this.showMenu(node, this.upgradeMenuPrefab);
-				break;
-			default:
-				break;
-			}
-		})
-	},
-
-	showMenu: function (node, prefab) {
-		this.closeMenu();
-		if (node.state == BaseState.Menu) {
-			return;
-		}
-		
-		let menu = cc.instantiate(prefab);
-		menu.parent = this.node;
-		menu.position = node.position;
-		this.setState(node, BaseState.Menu);
-		node.menu = menu;
-	},
 	
 	closeMenu: function () {
-		for (var node of this.towerBaseNodes) {
-			if (node.state == BaseState.Menu) {
-				node.menu.destroy();
-				node.state = node.prevState;
-				return node;
-			}
+		for (var base of this.bases) {
+			base.getComponent("base").closeMenu();
 		}
-	},
-	
-	setState: function (node, state) {
-		if (node.state == state) {
-			return;
-		}
-		
-		switch (state) {
-		case BaseState.Invalid:
-			break;
-		default:
-			break;
-		}
-		
-		// save previous state
-		node.prevState = node.state;
-		node.state = state;
-	},
-	
-	buildTower: function (data) {
-		// cc.log("build tower " + data);
-		let node = this.closeMenu();
-		// use single type for now
-		let tower = cc.instantiate(this.towerPrefab);
-		// cc.log(data + ", " + JSON.stringify(this.towersData[data]));
-		tower.getComponent("tower").configure(this.towersData[data], node.position);
-		tower.parent = this.node;
-		
-		this.setState(node, BaseState.BuiltTower);
-		node.tower = tower;
-	},
-	
-	sellTower: function () {
-		let node = this.closeMenu();
-		node.tower.destroy();
-		node.tower = undefined;
-		this.setState(node, BaseState.Empty);
-	},
-	
-	upgradeTower: function () {
-		let node = this.closeMenu();
-		node.tower.getComponent("tower").upgrade();
 	},
 	
 	onDestroy: function () {
-		global.event.remove("build_tower", this.buildTower.bind(this));
-		global.event.remove("sell_tower", this.sellTower.bind(this));
-		global.event.remove("upgrade_tower", this.upgradeTower.bind(this));
-		global.event.remove("level_start", this.levelStart.bind(this));
+		global.event.clear();
 	},
 	
 	levelStart: function() {
@@ -169,7 +66,7 @@ cc.Class({
 
 			// register enemy with an ID
 			let nid = this.enemiesList.length;
-			enemyScript.configure(nid, enemyData, this.enemyRouteNodes);
+			enemyScript.configure(nid, enemyData, this.routes);
 
 			// add an event for removing this enemy
 			this.enemiesList.push(enemyScript);
@@ -206,12 +103,12 @@ cc.Class({
 		}
 		
 		// search enemy
-		for (var base of this.towerBaseNodes) {
-			let tower = base.tower;
+		for (var base of this.bases) {
+			let tower = base.getComponent("base").tower;
 			// built tower
 			// TODO: use bitwise flag to separate different states
-			if (!!tower) {
-				tower.getComponent("tower").searchEnemy(this.enemiesList);
+			if (tower != undefined) {
+				tower.searchEnemy(this.enemiesList);
 			}
 		}
 	},

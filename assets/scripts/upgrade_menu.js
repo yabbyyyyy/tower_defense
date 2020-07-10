@@ -1,5 +1,4 @@
 // upgrade menu
-import global from './global'
 
 cc.Class({
     extends: cc.Component,
@@ -15,10 +14,10 @@ cc.Class({
 	buttonClick: function (event, customData) {
 		switch (customData) {
 		case "sell":
-			global.event.trigger("sell_tower");
+			this.node.target.sellTower();
 			break;
 		case "upgrade":
-			global.event.trigger("upgrade_tower");
+			this.node.target.upgradeTower();
 			break;
 		default:
 			cc.log("Unknown upgrade menu data << " + customData);

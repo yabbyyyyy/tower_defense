@@ -30,6 +30,12 @@ cc.Class({
 		// place holder
 	},
 	
+	onDestroy: function () {
+		// notify destroy
+		global.event.trigger("enemy" + this.nid, this.nid);
+		global.event.off("enemy" + this.nid);
+	},
+
 	configure: function (nid, data, pathPoints) {
 		this.nid = nid;
 		// cc.log(JSON.stringify(data));
@@ -97,9 +103,6 @@ cc.Class({
 			global.event.trigger("enemy_goal");
 		// intended fall through
 		case EnemyState.Dead:
-			// notify destroy
-			global.event.trigger("enemy" + this.nid, this.nid);
-			global.event.off("enemy" + this.nid);
 			this.node.destroy();
 		default:
 			break;
