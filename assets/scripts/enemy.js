@@ -14,26 +14,38 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-		spriteNode: {
+		sprite: {
 			default: null,
 			type: cc.Sprite,
 		},
-		healthBar: {
+		healthBarPrefab: {
 			default: null,
-			type: cc.ProgressBar,
+			type: cc.Prefab,
 		},
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-		// place holder
+		let hbarNode = cc.instantiate(this.healthBarPrefab);
+		this.hbar = hbarNode.getComponent(cc.ProgressBar);
+
+		hbarNode.zIndex = 1;
+		hbarNode.width = this.sprite.node.width;
+		this.hbar.totalLength = this.sprite.node.width;
+
+		hbarNode.active = false;
+		this.updateHbarPos();
+
+		// put it on the UI layer
+		hbarNode.parent = global.battle.uiLayer.node;
 	},
 	
 	onDestroy: function () {
 		// notify destroy
 		global.event.trigger("enemy" + this.nid, this.nid);
 		global.event.off("enemy" + this.nid);
+		this.hbar.node.destroy();
 	},
 
 	configure: function (nid, data, pathPoints) {
@@ -43,7 +55,7 @@ cc.Class({
 			if (err) {
 				cc.log("Failed to load sprite: " + err);
 			} else {
-				this.spriteNode.spriteFrame = result;
+				this.sprite.spriteFrame = result;
 			}
 		});
 		// basic attributes
@@ -59,7 +71,6 @@ cc.Class({
 		this.findDirection(pathPoints[1].position);
 		this.setState(EnemyState.Move);
 		this.node.opacity = 255;
-		this.healthBar.node.active = false;
 	},
 	
 	update: function (dt) {
@@ -86,6 +97,13 @@ cc.Class({
 					this.node.position = this.node.position.add(this.direction.mul(moved - dist));
 				}
 			}
+		}
+		this.updateHbarPos();
+	},
+
+	updateHbarPos: function () {
+		if (this.hbar.node.active) {
+			this.hbar.node.position = this.node.position.add(cc.v2(0, this.sprite.node.height));
 		}
 	},
 	
@@ -116,8 +134,8 @@ cc.Class({
 	
 	damage: function (hit) {
 		this.hp -= global.battle.damage(hit, this);
-		this.healthBar.node.active = true;	
-		this.healthBar.progress = Math.max(this.hp, 0)/this.maxHp;
+		this.hbar.node.active = true;
+		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
 		if (this.hp <= 0) {
 			this.setState(EnemyState.Dead);
 		}

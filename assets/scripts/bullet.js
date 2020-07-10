@@ -12,7 +12,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-		spriteNode: {
+		sprite: {
 			default: null,
 			type: cc.Sprite,
 		}
@@ -23,7 +23,7 @@ cc.Class({
     onLoad: function () {},
 	
 	fire: function (target, hit, sprite) {
-		this.spriteNode.spriteFrame = sprite;
+		this.sprite.spriteFrame = sprite;
 		this.target = target;
 		this.hit = hit;
 		this.setState(BulletState.Move);

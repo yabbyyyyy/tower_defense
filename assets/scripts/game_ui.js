@@ -40,6 +40,7 @@ cc.Class({
 
 	showDamage: function (damage, position, duration=1.0, crit=false) {
 		let label = cc.instantiate(this.damageLabel);
+		label.zIndex = 10;
 		label.position = position;
 
 		let labelScript = label.getComponent(cc.Label);

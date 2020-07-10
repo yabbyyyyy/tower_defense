@@ -28,7 +28,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-		spriteNode: {
+		sprite: {
 			default: null,
 			type: cc.Sprite,
 		},
@@ -79,7 +79,7 @@ cc.Class({
 				if (err) {
 					cc.log("Failed to load sprite: " + err);
 				} else {
-					this.spriteNode.spriteFrame = result;
+					this.sprite.spriteFrame = result;
 				}
 			});
 		}
