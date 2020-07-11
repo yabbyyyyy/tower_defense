@@ -75,7 +75,7 @@ cc.Class({
 		this.prop = update_dict(this.prop, ldata);
 		// update sprite
 		if (ldata.hasOwnProperty("sprite")) {
-			cc.loader.loadRes(ldata.sprite, cc.SpriteFrame, (err, result) => {
+			cc.resources.load(ldata.sprite, cc.SpriteFrame, (err, result) => {
 				if (err) {
 					cc.log("Failed to load sprite: " + err);
 				} else {
@@ -86,7 +86,7 @@ cc.Class({
 
 		// update bullet sprite
 		if (ldata.hasOwnProperty("bullet_sprite")) {
-			cc.loader.loadRes(ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
+			cc.resources.load(ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
 				if (err) {
 					cc.log("Failed to load sprite: " + err);
 				} else {

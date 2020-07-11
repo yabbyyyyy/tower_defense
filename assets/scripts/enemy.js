@@ -56,7 +56,7 @@ cc.Class({
 	configure: function (nid, data, pathPoints) {
 		this.nid = nid;
 		// cc.log(JSON.stringify(data));
-		cc.loader.loadRes(data.sprite, cc.SpriteFrame, (err, result) => {
+		cc.resources.load(data.sprite, cc.SpriteFrame, (err, result) => {
 			if (err) {
 				cc.log("Failed to load sprite: " + err);
 			} else {
