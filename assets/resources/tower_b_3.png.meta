@@ -1,10 +1,14 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.5",
   "uuid": "7fa18602-94c5-447d-8399-e8d4df733521",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 93,
+  "height": 114,
   "platformSettings": {},
   "subMetas": {
     "tower_b_3": {

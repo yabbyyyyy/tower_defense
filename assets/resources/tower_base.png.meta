@@ -1,10 +1,14 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.5",
   "uuid": "dc9b48b3-5693-4843-87ed-d4ee48277d1a",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 93,
+  "height": 93,
   "platformSettings": {},
   "subMetas": {
     "tower_base": {

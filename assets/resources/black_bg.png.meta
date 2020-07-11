@@ -1,10 +1,14 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.5",
   "uuid": "463390fe-4ecf-407a-b05e-b0dc72a8fedb",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 514,
+  "height": 514,
   "platformSettings": {},
   "subMetas": {
     "black_bg": {
