@@ -71,9 +71,7 @@ cc.Class({
 			break;		
 		case BulletState.Goal:
 			this.node.destroy();
-			if (this.target) {
-				this.target.damage(this.hit);
-			}
+			global.battle.damage(this.hit, this.target, this.dest);
 			break;
 		default:
 			break;

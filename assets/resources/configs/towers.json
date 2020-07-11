@@ -40,17 +40,20 @@
         "atk": 50,
         "range": 600,
         "view": 700,
+        "aoe_range": 100,
         "aspd": 0.3,
         "bullet_sprite": "bullet",
-        "bullet_speed": 900
+        "bullet_speed": 1200
       },
       {
         "sprite": "tower_b_2",
-        "atk": 100
+        "atk": 100,
+        "aoe_range": 125
       },
       {
         "sprite": "tower_b_3",
         "atk": 150,
+        "aoe_range": 150,
         "atk_range": 700,
         "aspd": 0.35
       }

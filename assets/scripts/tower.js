@@ -11,8 +11,7 @@ const default_prop = {
 	atk: 0,
 	crit: 0,
 	crit_mod: 100,
-	aoe: false,
-	aoe_range: 0,
+	aoe_range: -1,
 	lock: true,
 };
 

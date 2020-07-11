@@ -137,8 +137,8 @@ cc.Class({
 		// cc.log("Set Enemy State: " + this.state);
 	},
 	
-	damage: function (hit) {
-		this.hp -= global.battle.damage(hit, this);
+	damage: function (damage) {
+		this.hp -= damage;
 		this.hbar.node.active = true;
 		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
 		if (this.hp <= 0) {
