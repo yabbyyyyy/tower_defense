@@ -1,9 +1,11 @@
 {
   "0": {
-    "name": "mushroom_0",
-    "sprite": "wolf",
+    "name": "poring",
+    "sprite": "poring",
     "speed": 80,
     "hp": 15,
-    "defense": 0
+    "defense": 0,
+    "scale": 1.5,
+    "anchor": [0, 0.5]
   }
 }

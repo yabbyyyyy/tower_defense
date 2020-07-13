@@ -27,23 +27,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-		let hbarNode = cc.instantiate(this.healthBarPrefab);
-		this.hbar = hbarNode.getComponent(cc.ProgressBar);
-
-		// configure health bar
-		hbarNode.zIndex = 1;
-		let hwidth = this.sprite.node.width;
-		hbarNode.width = hwidth;
-		this.hbar.totalLength = hwidth;
-		hbarNode.getChildByName("bar").position = cc.v3(-hwidth/2., 0, 0);
-		this.hbar.progress = 1.0;
-
-		// hide health bar first
-		hbarNode.active = false;
-		this.updateHbarPos();
-
-		// put it on the UI layer
-		hbarNode.parent = global.battle.uiLayer.node;
+		// place holder
 	},
 	
 	onDestroy: function () {
@@ -75,16 +59,39 @@ cc.Class({
 		}
 		this.animations = data.animations;
 		this.animTimer = 0.;
+		this.scale = data.scale;
+		this.anchor = cc.v2(...data.anchor);
 
 		// first frame
 		this.frameId = 0;
 		this.animeId = 0;
+		this.animeSet = data.anime_set;
 		this.setAnimation(1);
 		this.setFrame(0);
 
+		// configure health bar
+		let hbarNode = cc.instantiate(this.healthBarPrefab);
+		this.hbar = hbarNode.getComponent(cc.ProgressBar);
+		hbarNode.zIndex = 1;
+		this.hbar.progress = 1.0;		
+				
+		this.updateHbarWidth(this.scale);
+		this.updateHbarPos();
+		// hide health bar first
+		hbarNode.active = false;
+		// put it on the UI layer
+		hbarNode.parent = global.battle.uiLayer.node;
+		
 		// state
 		this.setState(EnemyState.Move);
 		this.node.opacity = 255;
+	},
+
+	updateHbarWidth: function (scale = 1.0) {
+		let hwidth = this.sprite.node.width*scale;
+		this.hbar.node.width = hwidth;
+		this.hbar.totalLength = hwidth;
+		this.hbar.node.getChildByName("bar").position = cc.v3(-hwidth/2., 0, 0);
 	},
 
 	setFrame: function (fid) {
@@ -93,8 +100,12 @@ cc.Class({
 		}
 		let imid = this.currAnim.image_n[fid];
 		this.sprite.spriteFrame = this.frames[imid];
-		this.sprite.spriteFrame.setOffset(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]));
 		this.sprite.spriteFrame.setFlipX(this.currAnim.direction[fid]);
+		let size = this.sprite.spriteFrame.getOriginalSize();
+		this.sprite.node.width = size.width*this.scale*this.currAnim.scale_x[fid];
+		this.sprite.node.height = size.height*this.scale*this.currAnim.scale_y[fid];
+		let anchor = this.anchor.scale(cc.v2(this.sprite.node.width, this.sprite.node.height));
+		this.sprite.node.position = anchor.add(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]).mul(this.scale));
 		this.sprite.node.angle = -this.currAnim.rotation[fid];
 		return true;
 	},
@@ -179,13 +190,17 @@ cc.Class({
 			break;
 		case EnemyState.Goal:
 			global.event.trigger("enemy_goal");
+			global.event.trigger("enemy" + this.nid, this.nid);
+			global.event.off("enemy" + this.nid);
+			this.node.destroy();
+			break;
 		// intended fall through
 		case EnemyState.Dead:
 			this.hbar.node.active = false;
 			global.event.trigger("enemy" + this.nid, this.nid);
 			global.event.off("enemy" + this.nid);
 			this.setAnimation(4, this.direction, false);
-			let duration = this.getAnimeDuration() + 2.0;
+			let duration = 2.0; // this.getAnimeDuration();
 			this.node.runAction(cc.sequence(cc.fadeOut(duration), cc.callFunc(this.node.destroy, this.node)));
 			break;
 		default:

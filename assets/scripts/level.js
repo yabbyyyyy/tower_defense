@@ -58,7 +58,6 @@ cc.Class({
 	},
 	
 	addEnemy: function () {
-		this.waveTimer = 0;
 		if (this.enemyCount < this.currWave.count) {
 			let enemy = cc.instantiate(this.enemyPrefab);
 			let enemyData = this.enemiesData[this.currWave.id];
@@ -97,6 +96,7 @@ cc.Class({
 			let newEnemy = ((this.enemyCount == 0) && (this.waveTimer > this.currWave.wait)) ||
 						   ((this.enemyCount > 0) && (this.waveTimer >= this.currWave.interval));
 			if (newEnemy) {
+				this.waveTimer = 0;
 				this.addEnemy();
 				// cc.log("Wave " + this.wave + ", Enemy " + this.enemyCount + ": " + JSON.stringify(this.enemiesData[this.currWave.id]));
 			}

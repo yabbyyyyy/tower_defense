@@ -1,11 +1,11 @@
 {
 	"level_001": {
-    "life": 10,
+    	"life": 10,
 		"waves": [
 			{
-        "id": 0,
+        		"id": 0,
 				"wait": 0.0,
-        "interval": 2.0,
+        		"interval": 0.5,
 				"count": 50
 			}
 		]
