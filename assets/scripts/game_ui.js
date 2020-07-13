@@ -38,7 +38,7 @@ cc.Class({
 		}
 	},
 
-	showDamage: function (damage, position, duration=1.0, crit=false, moveBy=cc.v2(-30, 80)) {
+	showDamage: function (damage, position, duration=1.0, crit=false, moveBy=cc.v3(-30, 80, 0)) {
 		let label = cc.instantiate(this.damageLabel);
 		label.zIndex = 10;
 		label.position = position;
@@ -57,8 +57,10 @@ cc.Class({
 		}
 
 		label.parent = this.node;
-		let action = cc.spawn(cc.fadeOut(duration), cc.moveBy(duration, moveBy));
-		label.runAction(cc.sequence(action, cc.callFunc(label.destroy, label)));
+		cc.tween(label)
+		.by(duration, {opacity: -label.opacity, position: moveBy})
+		.call(label.destroy.bind(label))
+		.start();
 	},
 
     start () {
