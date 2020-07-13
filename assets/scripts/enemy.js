@@ -67,15 +67,37 @@ cc.Class({
 		this.node.position = pathPoints[0].position;
 		this.findDirection(pathPoints[1].position);
 
-		// animation
-		this.frames = data.frames;
-		this.currAnim = data.animations[this.nid % data.animations.length];
+		// animation frames
+		this.frames = [];
+		for (let rect of data.frameRects) {
+			let size = cc.size(rect[2], rect[3]);
+			let frame = new cc.SpriteFrame;
+			frame.setTexture(data.texture, cc.rect(...rect), false, cc.v2.zero, size);
+			this.frames.push(frame);
+		}
+		let aid = (this.nid % data.animations.length);
+		this.currAnim = data.animations[aid];
 		this.animTimer = 0.;
 		this.animId = 0;
+
+		// first frame
+		this.setFrame(0);
 
 		// state
 		this.setState(EnemyState.Move);
 		this.node.opacity = 255;
+	},
+
+	setFrame: function (fid) {
+		if (!this.currAnim) {
+			return false;
+		}
+		let imid = this.currAnim.image_n[fid];
+		this.sprite.spriteFrame = this.frames[imid];
+		this.sprite.spriteFrame.setOffset(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]));
+		this.sprite.spriteFrame.setFlipX(this.currAnim.direction[fid]);
+		this.sprite.node.angle = this.currAnim.rotation[fid];
+		return true;
 	},
 	
 	update: function (dt) {
@@ -90,12 +112,7 @@ cc.Class({
 				if (this.animId >= this.currAnim.image_n.length) {
 					this.animId = 0;
 				}
-				// frame id
-				let fid = this.animId;
-				this.sprite.spriteFrame = this.frames[this.currAnim.image_n[fid]];
-				this.sprite.spriteFrame.setFlipX(this.currAnim.direction[fid]);
-				this.sprite.spriteFrame.setOffset(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]));
-				this.sprite.node.angle = this.currAnim.rotation[fid];
+				this.setFrame(this.animId);
 			}
 		}
 

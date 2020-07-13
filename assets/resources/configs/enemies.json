@@ -2,7 +2,6 @@
   "0": {
     "name": "mushroom_0",
     "sprite": "wolf",
-    "animation": "wolf",
     "speed": 80,
     "hp": 15,
     "defense": 0
