@@ -56,7 +56,6 @@ cc.Class({
 			labelScript.lineHeight = 40;
 		}
 
-
 		label.parent = this.node;
 		let action = cc.spawn(cc.fadeOut(duration), cc.moveBy(duration, moveBy));
 		label.runAction(cc.sequence(action, cc.callFunc(label.destroy, label)));
