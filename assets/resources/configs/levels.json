@@ -5,8 +5,8 @@
 			{
         "id": 0,
 				"wait": 0.0,
-        "interval": 2.5,
-				"count": 1
+        "interval": 2.0,
+				"count": 50
 			}
 		]
 	}

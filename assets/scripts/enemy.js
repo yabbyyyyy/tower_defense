@@ -69,8 +69,9 @@ cc.Class({
 
 		// animation
 		this.frames = data.frames;
-		this.currAnim = data.animations[0];
+		this.currAnim = data.animations[this.nid % data.animations.length];
 		this.animTimer = 0.;
+		this.animId = 0;
 
 		// state
 		this.setState(EnemyState.Move);
@@ -83,12 +84,19 @@ cc.Class({
 			// speed unit is 40 ms
 			this.animTimer += dt*25;
 			// reset timer
-			if (this.animTimer >= this.currAnim.speed * this.currAnim.image_n.length) {
+			if (this.animTimer >= this.currAnim.speed) {
 				this.animTimer = 0.;
+				this.animId += 1;
+				if (this.animId >= this.currAnim.image_n.length) {
+					this.animId = 0;
+				}
+				// frame id
+				let fid = this.animId;
+				this.sprite.spriteFrame = this.frames[this.currAnim.image_n[fid]];
+				this.sprite.spriteFrame.setFlipX(this.currAnim.direction[fid]);
+				this.sprite.spriteFrame.setOffset(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]));
+				this.sprite.node.angle = this.currAnim.rotation[fid];
 			}
-			// frame id
-			let fid = Math.floor(this.animTimer/this.currAnim.speed);
-			this.sprite.spriteFrame = this.frames[this.currAnim.image_n[fid]];
 		}
 
 		// move
