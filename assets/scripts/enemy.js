@@ -5,8 +5,15 @@ const EnemyState = {
 	Undefined: -1,
 	Idle: 0,
 	Move: 1,
-	Dead: 2,
-	Goal: 3,
+	Attack: 2,
+	Damage: 3,
+	Dead: 4,
+	Action1: 5,
+	Action2: 6,
+	Action3: 7,
+	Action4: 8,
+	Action5: 9,
+	Goal: 21,
 };
 
 
@@ -60,13 +67,12 @@ cc.Class({
 		this.animations = data.animations;
 		this.animTimer = 0.;
 		this.scale = data.scale;
-		this.anchor = cc.v2(...data.anchor);
 
 		// first frame
 		this.frameId = 0;
 		this.animeId = 0;
 		this.animeSet = data.anime_set;
-		this.setAnimation(1);
+		this.setAnimation(EnemyState.Move);
 		this.setFrame(0);
 
 		// configure health bar
@@ -104,27 +110,28 @@ cc.Class({
 		let size = this.sprite.spriteFrame.getOriginalSize();
 		this.sprite.node.width = size.width*this.scale*this.currAnim.scale_x[fid];
 		this.sprite.node.height = size.height*this.scale*this.currAnim.scale_y[fid];
-		let anchor = this.anchor.scale(cc.v2(this.sprite.node.width, this.sprite.node.height));
-		this.sprite.node.position = anchor.add(cc.v2(this.currAnim.offset_x[fid], this.currAnim.offset_y[fid]).mul(this.scale));
+		this.sprite.node.position = cc.v2(this.currAnim.offset_x[fid], -this.currAnim.offset_y[fid]);
 		this.sprite.node.angle = -this.currAnim.rotation[fid];
 		return true;
 	},
 
 	setAnimation: function (sid = -1, dir = this.direction, repeat = true) {
-		if (this.animations) {
-			if (sid < 0) {
-				sid = Math.floor(this.animeId/8);
-			}
-			let did = (Math.floor(dir.angle(cc.v2(0, 1))/Math.PI*4.) + 4) % 8;
-			let aid = sid * 8 + did;
-			if (aid != this.animeId) {
-				this.animeId = aid;
-				this.currAnim = this.animations[aid];
-				this.animRepeat = repeat;
-				this.animTimer = 0;
-				this.frameId = 0;
-			}
+		if (sid < 0) {
+			sid = Math.floor(this.animeId/8);
 		}
+		if (!this.animations || ((sid + 1)*8 > this.animations.length)) {
+			return false;
+		}
+		let did = (Math.floor(dir.angle(cc.v2(0, 1))/Math.PI*4.) + 4) % 8;
+		let aid = sid * 8 + did;
+		if (aid != this.animeId) {
+			this.animeId = aid;
+			this.currAnim = this.animations[aid];
+			this.animRepeat = repeat;
+			this.animTimer = 0;
+			this.frameId = 0;
+		}
+		return true;
 	},
 
 	getAnimeDuration: function () {
@@ -199,7 +206,7 @@ cc.Class({
 			this.hbar.node.active = false;
 			global.event.trigger("enemy" + this.nid, this.nid);
 			global.event.off("enemy" + this.nid);
-			this.setAnimation(4, this.direction, false);
+			this.setAnimation(EnemyState.Dead, this.direction, false);
 			let duration = 2.0; // this.getAnimeDuration();
 			this.node.runAction(cc.sequence(cc.fadeOut(duration), cc.callFunc(this.node.destroy, this.node)));
 			break;

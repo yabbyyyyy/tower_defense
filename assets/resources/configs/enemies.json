@@ -5,7 +5,6 @@
     "speed": 80,
     "hp": 15,
     "defense": 0,
-    "scale": 1.5,
-    "anchor": [0, 0.5]
+    "scale": 1.5
   }
 }

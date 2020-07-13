@@ -5,7 +5,7 @@
 			{
         		"id": 0,
 				"wait": 0.0,
-        		"interval": 0.5,
+        		"interval": 3.5,
 				"count": 50
 			}
 		]
