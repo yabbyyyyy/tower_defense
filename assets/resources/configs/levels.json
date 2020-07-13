@@ -3,47 +3,11 @@
     "life": 10,
 		"waves": [
 			{
-				"wait": 1.0,
-        "interval": 0.5,
-				"id": 0,
-				"count": 15
-			},
-			{
-				"wait": 10.0,
-				"interval": 0.5,
-				"id": 1,
-				"count": 20
-			},
-      {
-        "wait": 10.0,
-        "interval": 0.5,
-        "id": 2,
-        "count": 30
-      },
-      {
-        "wait": 1.0,
-        "interval": 0.5,
-        "id": 3,
-        "count": 30
-      },
-      {
-        "wait": 1.0,
-        "interval": 0.5,
-        "id": 4,
-        "count": 30
-      },
-      {
-        "wait": 1.0,
-        "interval": 0.5,
-        "id": 5,
-        "count": 40
-      },
-      {
-        "wait": 1.0,
-        "interval": 0.5,
-        "id": 6,
-        "count": 50
-      }
+        "id": 0,
+				"wait": 0.0,
+        "interval": 2.5,
+				"count": 1
+			}
 		]
 	}
 }

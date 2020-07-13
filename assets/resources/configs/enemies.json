@@ -1,51 +1,10 @@
 {
   "0": {
     "name": "mushroom_0",
-    "sprite": "mushroom_0",
-    "speed": 50,
+    "sprite": "wolf",
+    "animation": "wolf",
+    "speed": 80,
     "hp": 15,
-    "defense": 0
-  },
-  "1": {
-    "name": "mushroom_1",
-    "sprite": "mushroom_1",
-    "speed": 100,
-    "hp": 25,
-    "defense": 0
-  },
-  "2": {
-    "name": "mushroom_2",
-    "sprite": "mushroom_2",
-    "speed": 50,
-    "hp": 50,
-    "defense": 0
-  },
-  "3": {
-    "name": "mushroom_3",
-    "sprite": "mushroom_3",
-    "speed": 70,
-    "hp": 50,
-    "defense": 0
-  },
-  "4": {
-    "name": "mushroom_4",
-    "sprite": "mushroom_4",
-    "speed": 50,
-    "hp": 250,
-    "defense": 0
-  },
-  "5": {
-    "name": "mushroom_5",
-    "sprite": "mushroom_5",
-    "speed": 100,
-    "hp": 150,
-    "defense": 0
-  },
-  "6": {
-    "name": "mushroom_6",
-    "sprite": "mushroom_6",
-    "speed": 50,
-    "hp": 350,
     "defense": 0
   }
 }

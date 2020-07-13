@@ -55,30 +55,43 @@ cc.Class({
 
 	configure: function (nid, data, pathPoints) {
 		this.nid = nid;
-		// cc.log(JSON.stringify(data));
-		cc.resources.load(data.sprite, cc.SpriteFrame, (err, result) => {
-			if (err) {
-				cc.log("Failed to load sprite: " + err);
-			} else {
-				this.sprite.spriteFrame = result;
-			}
-		});
 		// basic attributes
 		this.hp = data.hp;
 		this.maxHp = data.hp;
 		this.defense = data.defense;
 		this.speed = data.speed;
 		
-		// direction and state
+		// path and direction
 		this.pathPoints = pathPoints;
 		this.currPt = 0;
 		this.node.position = pathPoints[0].position;
 		this.findDirection(pathPoints[1].position);
+
+		// animation
+		this.frames = data.frames;
+		this.currAnim = data.animations[0];
+		this.animTimer = 0.;
+
+		// state
 		this.setState(EnemyState.Move);
 		this.node.opacity = 255;
 	},
 	
 	update: function (dt) {
+		// animation
+		if (this.currAnim) {
+			// speed unit is 40 ms
+			this.animTimer += dt*25;
+			// reset timer
+			if (this.animTimer >= this.currAnim.speed * this.currAnim.image_n.length) {
+				this.animTimer = 0.;
+			}
+			// frame id
+			let fid = Math.floor(this.animTimer/this.currAnim.speed);
+			this.sprite.spriteFrame = this.frames[this.currAnim.image_n[fid]];
+		}
+
+		// move
 		if (this.state == EnemyState.Move) {
 			let dest = this.pathPoints[this.currPt + 1].position;
 			let dist = dest.sub(this.node.position).mag();

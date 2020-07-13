@@ -19,9 +19,9 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-		// pass this script to the base
 		this.bases = this.node.getChildByName("bases").getChildren();
 		this.routes = this.node.getChildByName("routes").getChildren();
+		// pass this script to the base
 		for (var base of this.bases) {
 			base.getComponent("base").levelScript = this;
 		}
