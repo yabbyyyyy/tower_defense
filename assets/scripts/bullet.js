@@ -22,9 +22,10 @@ cc.Class({
 
     onLoad: function () {},
 	
-	fire: function (pos, target, hit, sprite) {
+	fire: function (pos, target, hit, sprite, scale) {
 		this.node.position = pos;
 		this.sprite.spriteFrame = sprite;
+		this.sprite.node.scale = cc.v2(scale, scale);
 		this.hit = hit;
 		this.setState(BulletState.Move);
 		this.setDestination(target.getCenterPos());

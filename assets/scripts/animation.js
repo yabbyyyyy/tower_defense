@@ -81,9 +81,7 @@ cc.Class({
         let imid = animeSet.image_n[fid];
 		this.sprite.spriteFrame = this.frames[imid];
 		this.sprite.spriteFrame.setFlipX(mirror ^ animeSet.direction[fid]);
-		let size = this.sprite.spriteFrame.getOriginalSize();
-		this.sprite.node.width = size.width * this.scale * animeSet.scale_x[fid];
-		this.sprite.node.height = size.height * this.scale * animeSet.scale_y[fid];
+		this.sprite.node.scale = cc.v2(this.scale * animeSet.scale_x[fid], this.scale * animeSet.scale_y[fid]);
 		this.sprite.node.position = cc.v2(animeSet.offset_x[fid], animeSet.offset_y[fid]);
 		this.sprite.node.angle = animeSet.rotation[fid];
 	},

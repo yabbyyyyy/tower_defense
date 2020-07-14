@@ -72,14 +72,16 @@ cc.Class({
 		}
 		this.prop = update_dict(this.prop, ldata);
 
-		cc.log(ldata);
 		this.findDirection(cc.v3(-5000, -5000, 0));
 		this.initAnimation(ldata);
 		this.playAnime(UnitState.Idle, -1);
 
+		this.bulletScale = 1.0;
+		if (ldata.bullet_scale) {
+			this.bulletScale = ldata.bullet_scale;
+		}
 		// update bullet sprite
 		if (ldata.hasOwnProperty("bullet_sprite")) {
-			cc.log(ldata.bullet_sprite);
 			cc.resources.load('sprites/' + ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
 				if (err) {
 					cc.log("Failed to load sprite: " + err);
@@ -141,7 +143,7 @@ cc.Class({
 			// fire bullets
 			let bullet = cc.instantiate(this.bulletPrefab);
 			let bulletPos = this.getCenterPos().add(this.direction.mul(100));
-			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletSprite);
+			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletSprite, this.bulletScale);
 			bullet.getComponent("bullet").updateAngle();
 			bullet.parent = this.node.parent;
 		}
