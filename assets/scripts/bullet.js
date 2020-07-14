@@ -45,8 +45,7 @@ cc.Class({
 		}
 
 		if (this.state == BulletState.Move) {
-			let dir = this.dest.sub(this.node.position).normalize();
-			this.node.angle = -dir.signAngle(cc.v2(0, 1))/Math.PI*180.;
+			let dir = this.updateAngle();
 			let moved = dt*this.hit.bullet_speed;
 			let dist = this.dest.sub(this.node.position).mag();
 		
@@ -57,6 +56,12 @@ cc.Class({
 				this.node.position = this.node.position.add(dir.mul(moved));
 			}
 		}
+	},
+
+	updateAngle: function() {
+		let dir = this.dest.sub(this.node.position).normalize();
+		this.node.angle = -dir.signAngle(cc.v2(0, 1))/Math.PI*180.;
+		return dir;
 	},
 	
 	setState: function (state) {

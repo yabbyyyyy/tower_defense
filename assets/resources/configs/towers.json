@@ -1,56 +1,62 @@
 {
-  "tower_a": {
+  "0": {
     "name": "TowerA",
     "element": "fire",
     "levels": [
       {
-        "sprite": "tower_a_1",
+        "sprite": "goblin_archer",
+        "scale": 2.0,
         "atk": 5,
         "crit": 15,
         "crit_mod": 100,
         "range": 300,
         "view": 400,
         "aspd": 1.5,
-        "bullet_sprite": "bullet",
-        "bullet_speed": 1500
+        "bullet_sprite": "skel_archer_arrow",
+        "bullet_speed": 800
       },
       {
-        "sprite": "tower_a_2",
+        "sprite": "skel_archer",
+        "scale": 1.5,
         "atk": 10,
         "crit": 30,
         "aspd": 2.0,
         "crit_mod": 200
       },
       {
-        "sprite": "tower_a_3",
+        "sprite": "orc_archer",
+        "scale": 1.5,
         "atk_range": 400,
         "atk": 15,
         "crit_mod": 300
       }
     ]
   },
-  "tower_b": {
+  "1": {
     "name": "TowerB",
     "element": "fire",
     "levels": [
       {
-        "sprite": "tower_b_1",
+        "sprite": "ancient_tree",
+        "scale": 1.5,
         "atk": 50,
         "range": 600,
         "view": 700,
         "aoe_range": 100,
         "aspd": 0.15,
-        "bullet_sprite": "bullet",
-        "bullet_speed": 1200,
+        "bullet_sprite": "stone_shooter_bullet",
+        "bullet_speed": 600,
         "lock": false
       },
       {
-        "sprite": "tower_b_2",
+        "sprite": "boitata",
+        "scale": 1.5,
         "atk": 70,
         "aoe_range": 125
       },
       {
-        "sprite": "tower_b_3",
+        "sprite": "detale",
+        "scale": 1.5,
         "atk": 90,
         "aoe_range": 150,
         "atk_range": 700

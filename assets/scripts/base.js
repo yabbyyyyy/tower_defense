@@ -83,7 +83,7 @@ cc.Class({
 		// use single type for now
 		let tower = cc.instantiate(this.levelScript.towerPrefab);
         // cc.log(data + ", " + JSON.stringify(this.towersData[data]));
-        let towerScript = tower.getComponent("tower");
+		let towerScript = tower.getComponent("tower");
         towerScript.configure(this.levelScript.towersData[data], this.node.position);
 		tower.parent = this.levelScript.node;
 		

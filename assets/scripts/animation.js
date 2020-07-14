@@ -28,7 +28,11 @@ cc.Class({
             this.direction = cc.v3(0, -1, 0);
         }
         this.animations = data.animations;
-        this.scale = data.scale;
+        if (data.scale) {
+            this.scale = data.scale;
+        } else {
+            this.scale = 1.0;
+        }
     },
 
 	findDirection: function (dest) {
@@ -87,7 +91,7 @@ cc.Class({
     // this should be called inside update(dt)
     animeUpdate: function (dt) {
         // change anime
-        if (this.playState.nums == 0) {
+        if (this.playState && (this.playState.nums == 0)) {
             if (this.playState.restore && this.prevPlayState) {
                 this.playAnime(this.prevPlayState.sid, this.prevPlayState.nums, this.prevPlayState.speed);
                 this.prevPlayState = undefined;

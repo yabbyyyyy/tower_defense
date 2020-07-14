@@ -29,8 +29,9 @@ cc.Class({
 		let level = cc.instantiate(this.levelPrefabs[0]);
 		let levelData = this.levelsConfig.json[level.name];
 		let enemyData = this.loadEnemies(levelData);
+		let towerData = this.loadTowers();
 
-		level.getComponent("level").configure(levelData, enemyData, this.towersConfig.json);
+		level.getComponent("level").configure(levelData, enemyData, towerData);
 		level.parent = this.node;
 	},
 
@@ -61,6 +62,31 @@ cc.Class({
 			});
 		}
 		return enemyData;
+	},
+
+	loadTowers: function () {
+		for (var tid of Object.keys(this.towersConfig.json)) {
+			let tower = this.towersConfig.json[tid];
+			for (let level of tower.levels) {
+				cc.resources.load("sprites/" + level.sprite, cc.JsonAsset, (err, res) => {
+					if (err) {
+						cc.log(err);
+					} else {
+						level.frameRects = res.json.frame_rects;
+						level.animations = res.json.animations;
+					}
+				});
+				// this has to be inside because the loading is async and it requires max_frames read from the json file
+				cc.resources.load('sprites/' + level.sprite, cc.Texture2D, (err, tex) => {
+					if (err) {
+						cc.log(err);
+					} else {
+						level.texture = tex;
+					}
+				});
+			}
+		}
+		return this.towersConfig.json;
 	},
 
     start () {

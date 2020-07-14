@@ -2,29 +2,29 @@
   "0": {
     "name": "poring",
     "sprite": "poring",
+    "scale": 1.5,
     "speed": 80,
     "hp": 25,
     "defense": 0,
-    "vitality": 1.0,
-    "scale": 1.5
+    "vitality": 1.0
   },
   "1": {
     "name": "mantis",
     "sprite": "mantis",
+    "scale": 1.2,
     "speed": 100,
     "hp": 40,
     "defense": 0,
-    "vitality": 1.0,
-    "scale": 1.2
+    "vitality": 1.0
   },
   "2": {
     "name": "wolf",
     "sprite": "wolf",
+    "scale": 1.2,
     "speed": 120,
     "hp": 85,
     "defense": 2,
-    "vitality": 1.0,
-    "scale": 1.2
+    "vitality": 1.0
   },
   "3": {
     "name": "majoruros",
@@ -32,8 +32,7 @@
     "speed": 35,
     "hp": 200,
     "defense": 7,
-    "vitality": 5.0,
-    "scale": 1.0
+    "vitality": 5.0
   },
   "4": {
     "name": "marduk",
@@ -41,8 +40,7 @@
     "speed": 70,
     "hp": 220,
     "defense": 2,
-    "vitality": 2.0,
-    "scale": 1.0
+    "vitality": 2.0
   },
   "5": {
     "name": "owl_duke",
@@ -50,8 +48,7 @@
     "speed": 150,
     "hp": 200,
     "defense": 2,
-    "vitality": 2.0,
-    "scale": 1.0
+    "vitality": 2.0
   },
   "6": {
     "name": "randgris",
@@ -59,7 +56,6 @@
     "speed": 200,
     "hp": 450,
     "defense": 8,
-    "vitality": 5.0,
-    "scale": 1.0
+    "vitality": 5.0
   }
 }

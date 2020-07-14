@@ -1,6 +1,8 @@
 // tower script
 import global from './global'
 
+var animeComponent = require("animation");
+const UnitState = require("unit_state");
 
 // default properties
 const default_prop = {
@@ -26,13 +28,8 @@ function update_dict (my_hit, data) {
 };
 
 cc.Class({
-    extends: cc.Component,
-
+    extends: animeComponent,
     properties: {
-		sprite: {
-			default: null,
-			type: cc.Sprite,
-		},
 		bulletSprite: {
 			default: null,
 			type: cc.SpriteFrame,
@@ -74,20 +71,16 @@ cc.Class({
 			this.prop = Object.assign({}, default_prop);
 		}
 		this.prop = update_dict(this.prop, ldata);
-		// update sprite
-		if (ldata.hasOwnProperty("sprite")) {
-			cc.resources.load(ldata.sprite, cc.SpriteFrame, (err, result) => {
-				if (err) {
-					cc.log("Failed to load sprite: " + err);
-				} else {
-					this.sprite.spriteFrame = result;
-				}
-			});
-		}
+
+		cc.log(ldata);
+		this.findDirection(cc.v3(-5000, -5000, 0));
+		this.initAnimation(ldata);
+		this.playAnime(UnitState.Idle, -1);
 
 		// update bullet sprite
 		if (ldata.hasOwnProperty("bullet_sprite")) {
-			cc.resources.load(ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
+			cc.log(ldata.bullet_sprite);
+			cc.resources.load('sprites/' + ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
 				if (err) {
 					cc.log("Failed to load sprite: " + err);
 				} else {
@@ -126,11 +119,10 @@ cc.Class({
 	},
 		
 	update: function (dt) {
+		this.animeUpdate(dt)
 		this.attackTimer += dt;
 		if (this.enemy != undefined) {
-			let direction = this.node.position.sub(this.enemy.node.position);
-			this.node.angle = -cc.v2(direction.x, direction.y).signAngle(cc.v2(0, -1))/Math.PI*180.;
-			
+			this.findDirection(this.enemy.getCenterPos());
 			if (this.node.position.sub(this.enemy.node.position).mag() > this.prop.range) {
 				this.enemy = undefined;
 			} else {
@@ -140,12 +132,17 @@ cc.Class({
 	},
 	
 	attack: function (target, dt) {
-		if (this.attackTimer >= global.battle.atk_interval(this.prop.aspd)) {
+		let interval = global.battle.atk_interval(this.prop.aspd);
+		if (this.attackTimer >= interval) {
 			this.attackTimer = 0.;
+			// attack anime
+			let speed = this.getAnimeDuration(UnitState.Attack)/interval;
+			this.playAnime(UnitState.Attack, 1, speed, true);
+			// fire bullets
 			let bullet = cc.instantiate(this.bulletPrefab);
-			let bulletPos = this.node.position.add(target.node.position.sub(this.node.position).normalize().mul(100));
+			let bulletPos = this.getCenterPos().add(this.direction.mul(100));
 			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletSprite);
-			bullet.angle = this.node.angle;
+			bullet.getComponent("bullet").updateAngle();
 			bullet.parent = this.node.parent;
 		}
 	},
