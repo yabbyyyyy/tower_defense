@@ -112,6 +112,46 @@ cc.Class({
 		}
 	},
 
+	setState: function (state) {
+		if (this.state == state) {
+			return;
+		}
+		
+		switch (state) {
+		case UnitState.Undefined:
+            break;
+		case UnitState.Idle:
+            this.playAnime(UnitState.Idle, -1);
+            break;
+		case UnitState.Move:
+            this.playAnime(UnitState.Move, -1);
+			break;
+		case UnitState.Goal:
+            this.unregister();
+			global.event.trigger("enemy_goal");
+			cc.tween(this.node).to(1.0, {opacity: 0}).call(this.node.destro.bind(this.node)).start();
+			break;
+		case UnitState.Dead:
+			this.unregister();
+			this.playAnime(UnitState.Dead);
+            cc.tween(this.node).to(2.0, {opacity: 0}).call(this.node.destroy.bind(this.node)).start();
+			break;
+		default:
+			break;
+		}
+		
+		// save previous state
+		this.prevState = this.state;
+		this.state = state;
+		// cc.log("Set Enemy State: " + this.state);
+	},
+	
+	unregister: function () {
+		this.hbar.node.active = false;
+		global.event.trigger("enemy" + this.nid, this.nid);
+		global.event.off("enemy" + this.nid);
+	},
+
     start () {
 
     },
