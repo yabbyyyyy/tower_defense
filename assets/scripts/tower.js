@@ -12,6 +12,7 @@ const default_prop = {
 	crit: 0,
 	crit_mod: 100,
 	aoe_range: -1,
+	recover: 0.3,
 	lock: true,
 };
 

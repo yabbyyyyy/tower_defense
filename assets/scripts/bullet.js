@@ -25,11 +25,13 @@ cc.Class({
 	fire: function (pos, target, hit, sprite) {
 		this.node.position = pos;
 		this.sprite.spriteFrame = sprite;
-		this.target = target;
 		this.hit = hit;
 		this.setState(BulletState.Move);
 		this.setDestination(target.node.position);
-		global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
+		if (this.hit.lock) {
+			this.target = target;
+			global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
+		}
 	},
 
 	setDestination(position) {

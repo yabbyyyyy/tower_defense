@@ -5,28 +5,26 @@
     "levels": [
       {
         "sprite": "tower_a_1",
-        "atk": 2,
+        "atk": 5,
         "crit": 15,
         "crit_mod": 100,
         "range": 300,
         "view": 400,
-        "aspd": 3.0,
+        "aspd": 1.5,
         "bullet_sprite": "bullet",
         "bullet_speed": 1500
       },
       {
         "sprite": "tower_a_2",
-        "atk": 5,
-        "aspd": 4.0,
+        "atk": 10,
         "crit": 30,
+        "aspd": 2.0,
         "crit_mod": 200
-
       },
       {
         "sprite": "tower_a_3",
         "atk_range": 400,
-        "atk": 10,
-        "aspd": 5.0,
+        "atk": 15,
         "crit_mod": 300
       }
     ]
@@ -41,21 +39,21 @@
         "range": 600,
         "view": 700,
         "aoe_range": 100,
-        "aspd": 0.3,
+        "aspd": 0.15,
         "bullet_sprite": "bullet",
-        "bullet_speed": 1200
+        "bullet_speed": 1200,
+        "lock": false
       },
       {
         "sprite": "tower_b_2",
-        "atk": 100,
+        "atk": 70,
         "aoe_range": 125
       },
       {
         "sprite": "tower_b_3",
-        "atk": 150,
+        "atk": 90,
         "aoe_range": 150,
-        "atk_range": 700,
-        "aspd": 0.35
+        "atk_range": 700
       }
     ]
   }
