@@ -33,6 +33,7 @@ cc.Class({
 					this.countDownLabel.string = "Start!";
 					// cc.log("start");
 					global.event.trigger("level_start");
+					cc.tween(this.countDownLabel.node).to(3.0, {opacity: 0}).start();
 				}
 			}
 		}
