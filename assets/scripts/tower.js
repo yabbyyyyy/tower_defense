@@ -69,7 +69,7 @@ cc.Class({
 		this.prop = update_dict(this.prop, ldata);
 
 		this.findDirection(cc.v3(-5000, -5000, 0));
-		this.initAnimation(ldata);
+		this.spriteSize = this.initAnimation(ldata);
 		this.playAnime(UnitState.Idle, -1);
 
 		this.bulletScale = 1.0;
@@ -131,7 +131,7 @@ cc.Class({
 			this.playAnimeOnce(UnitState.Attack, interval);
 			// fire bullets
 			let bullet = cc.instantiate(this.bulletPrefab);
-			let bulletPos = this.getCenterPos().add(this.direction.mul(100));
+			let bulletPos = this.node.position.add(cc.v2(0, 0.5*this.spriteSize.y)).add(this.direction.mul(30));
 			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletScale, this.bulletSprite);
 			bullet.getComponent("bullet").updateAngle();
 			bullet.parent = this.node.parent;

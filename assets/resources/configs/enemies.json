@@ -1,6 +1,5 @@
 {
-  "0": {
-    "name": "lunatic",
+  "poring": {
     "sprite": "poring",
     "scale": 1.5,
     "speed": 80,
@@ -8,53 +7,55 @@
     "defense": 0,
     "vitality": 1.0
   },
-  "1": {
-    "name": "mantis",
-    "sprite": "mantis",
-    "scale": 1.2,
-    "speed": 100,
-    "hp": 40,
+  "lunatic": {
+    "sprite": "lunatic",
+    "scale": 1.5,
+    "speed": 80,
+    "hp": 50,
     "defense": 0,
     "vitality": 1.0
   },
-  "2": {
-    "name": "wolf",
+  "mantis": {
+    "sprite": "mantis",
+    "scale": 1.2,
+    "speed": 100,
+    "hp": 80,
+    "defense": 1,
+    "vitality": 1.0
+  },
+  "wolf": {
     "sprite": "wolf",
     "scale": 1.2,
     "speed": 120,
-    "hp": 85,
-    "defense": 2,
+    "hp": 105,
+    "defense": 3,
     "vitality": 1.0
   },
-  "3": {
-    "name": "majoruros",
+  "majoruros": {
     "sprite": "majoruros",
     "speed": 35,
-    "hp": 200,
+    "hp": 400,
     "defense": 7,
     "vitality": 5.0
   },
-  "4": {
-    "name": "marduk",
+  "marduk": {
     "sprite": "marduk",
     "speed": 70,
-    "hp": 220,
-    "defense": 2,
+    "hp": 285,
+    "defense": 3,
     "vitality": 2.0
   },
-  "5": {
-    "name": "owl_duke",
+  "owl_duke": {
     "sprite": "owl_duke",
     "speed": 150,
-    "hp": 200,
+    "hp": 250,
     "defense": 2,
     "vitality": 2.0
   },
-  "6": {
-    "name": "randgris",
+  "randgris": {
     "sprite": "randgris",
     "speed": 200,
-    "hp": 450,
+    "hp": 650,
     "defense": 8,
     "vitality": 5.0
   }

@@ -447,7 +447,7 @@
     "component": "",
     "_componentId": "52653kPIxVNKIufaty7jbPn",
     "handler": "buttonClick",
-    "customEventData": "0"
+    "customEventData": "TowerA"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -729,7 +729,7 @@
     "component": "",
     "_componentId": "52653kPIxVNKIufaty7jbPn",
     "handler": "buttonClick",
-    "customEventData": "1"
+    "customEventData": "TowerB"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -1,6 +1,5 @@
 {
-  "0": {
-    "name": "TowerA",
+  "TowerA": {
     "element": "fire",
     "levels": [
       {
@@ -16,7 +15,7 @@
         "bullet_speed": 800
       },
       {
-        "sprite": "skel_archer",
+        "sprite": "orc_archer",
         "scale": 1.2,
         "atk": 10,
         "crit": 30,
@@ -24,7 +23,7 @@
         "crit_mod": 200
       },
       {
-        "sprite": "orc_archer",
+        "sprite": "raydric_archer",
         "scale": 1.2,
         "atk_range": 400,
         "atk": 15,
@@ -32,12 +31,11 @@
       }
     ]
   },
-  "1": {
-    "name": "TowerB",
+  "TowerB": {
     "element": "fire",
     "levels": [
       {
-        "sprite": "ancient_tree",
+        "sprite": "faceworm",
         "scale": 1.0,
         "atk": 50,
         "range": 600,
@@ -47,6 +45,7 @@
         "bullet_sprite": "stone_shooter_bullet",
         "bullet_scale": 1.5,
         "bullet_speed": 600,
+        "recover": 1.0,
         "lock": false
       },
       {
@@ -54,6 +53,7 @@
         "scale": 1.0,
         "bullet_scale": 2.5,
         "atk": 70,
+        "recover": 1.5,
         "aoe_range": 150
       },
       {
@@ -61,6 +61,7 @@
         "scale": 1.0,
         "bullet_scale": 3.5,
         "atk": 90,
+        "recover": 2.0,
         "aoe_range": 225,
         "atk_range": 700
       }

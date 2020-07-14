@@ -3,43 +3,49 @@
     	"life": 10,
 		"waves": [
 			{
-        		"id": 0,
+        		"id": "poring",
 				"wait": 0.0,
         		"interval": 1.0,
 				"count": 20
 			},
 			{
-        		"id": 1,
-				"wait": 155.0,
+        		"id": "lunatic",
+				"wait": 5.0,
         		"interval": 1.0,
 				"count": 20
 			},
 			{
-        		"id": 2,
+        		"id": "mantis",
+				"wait": 5.0,
+        		"interval": 1.0,
+				"count": 20
+			},
+			{
+        		"id": "wolf",
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 30
 			},
 			{
-        		"id": 3,
+        		"id": "majoruros",
 				"wait": 5.0,
         		"interval": 2.5,
 				"count": 40
 			},
 			{
-        		"id": 4,
+        		"id": "marduk",
 				"wait": 5.0,
         		"interval": 1.5,
 				"count": 25
 			},
 			{
-        		"id": 5,
+        		"id": "owl_duke",
 				"wait": 10.0,
         		"interval": 1.0,
 				"count": 15
 			},
 			{
-        		"id": 6,
+        		"id": "randgris",
 				"wait": 10.0,
         		"interval": 5.0,
 				"count": 5

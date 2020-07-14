@@ -146,8 +146,8 @@ cc.Class({
 			this.unregister();
 			this.playAnimeOnce(UnitState.Dead, -1, false);
 			cc.tween(this.node)
-				.to(2.0, {opacity: 255})
-				.to(1.0, {opacity: 0})
+				.to(3.0, {})
+				.to(2.0, {opacity: 0})
 				.call(this.node.destroy.bind(this.node)).start();
 			break;
 		default:
