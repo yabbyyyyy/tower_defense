@@ -32,6 +32,7 @@ cc.Class({
 		this.maxHp = data.hp;
 		this.defense = data.defense;
 		this.speed = data.speed;
+		this.originalSpeed = data.speed;
 		
 		// path and direction
 		this.pathPoints = pathPoints;
@@ -103,10 +104,15 @@ cc.Class({
 		this.updateHbarPos();
 	},
 	
-	damage: function (damage) {
+	damage: function (damage, hitRecover = 0.0) {
 		this.hp -= damage;
 		this.hbar.node.active = true;
 		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
+		this.playAnime(UnitState.Damage, 1, 2.0, true);
+		if (hitRecover > 0.01) {
+			this.speed = 0.2*this.originalSpeed;
+			cc.tween(this).to(hitRecover, {speed: this.originalSpeed}).start();
+		}
 		if (this.hp <= 0) {
 			this.setState(UnitState.Dead);
 		}

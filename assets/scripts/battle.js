@@ -52,7 +52,7 @@ const BattleController = function (obj) {
             if (crit) {
                 damage *= (1. + hit.crit_mod/100.);
             }
-            target.damage(damage);
+            target.damage(damage, hit.recover*mod);
             // show damage on UI layer
             let damageNum = Math.round(damage);
             if ((damageNum > 0) && (obj.uiLayer)) {

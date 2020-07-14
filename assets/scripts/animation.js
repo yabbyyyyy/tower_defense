@@ -28,7 +28,6 @@ cc.Class({
             this.direction = cc.v3(0, -1, 0);
         }
         this.animations = data.animations;
-		this.animTimer = 0.;
         this.scale = data.scale;
     },
 
@@ -39,20 +38,37 @@ cc.Class({
 		}
 	},
     
+    getAnimeDuration: function (sid) {
+        let aid = sid*2 + (this.direction.y <= 0 ? 0 : 1);
+        if (!this.animations || aid >= this.animations.length) {
+            return 0.;
+        }
+        return this.animations[aid].speed * this.animations[aid].image_n.length;
+    },
     // play the corresponding animation for a number of times, nums < 0 means inifinite repeats
-    playAnime: function (sid, nums = 1) {
+    // set restore to restore the previous anime play state
+    // default speed unit is 40 ms (1000./40.)
+    playAnime: function (sid, nums = 1, speed = 1.0, restore = false) {
         let aid = sid*2 + (this.direction.y <= 0 ? 0 : 1);
         if (!this.animations || aid >= this.animations.length) {
             return false;
         }
 
-		if (!this.animeId || (aid != this.animeId)) {
+        let playState = {sid, nums, speed, restore};
+        // repeat playing, only refresh timer
+        if (this.playState && (playState == this.playState)) {
+            this.animTimer = 0;
+            this.frameId = 0;
+        } else {
             this.animeId = aid;
             this.currAnim = this.animations[aid];
-			this.numPlays = nums;
-			this.animTimer = 0;
+		    this.animTimer = 0;
             this.frameId = 0;
-		}
+            if (restore & !this.prevPlayState) {
+                this.prevPlayState = this.playState;
+            }
+            this.playState = playState
+        }
 		return true;
     },
     
@@ -70,11 +86,21 @@ cc.Class({
 
     // this should be called inside update(dt)
     animeUpdate: function (dt) {
-        if (!this.currAnim || (this.numPlays == 0)) {
+        // change anime
+        if (this.playState.nums == 0) {
+            if (this.playState.restore && this.prevPlayState) {
+                this.playAnime(this.prevPlayState.sid, this.prevPlayState.nums, this.prevPlayState.speed);
+                this.prevPlayState = undefined;
+            }
             return;
         }
-        // speed unit is 40 ms
-        this.animTimer += dt*25;
+
+        // sanity check
+        if (!this.currAnim) {
+            return;
+        }
+        
+        this.animTimer += dt*this.playState.speed*25;
 
         if (this.animTimer >= this.currAnim.speed) {
             this.animTimer = 0;
@@ -88,11 +114,11 @@ cc.Class({
             // check if frame id exceeds the maximum numbers
             let nFrames = this.currAnim.image_n.length;
             if (this.frameId >= nFrames) {
-                this.numPlays -= 1;
+                this.playState.nums -= 1;
                 this.frameId = this.frameId % nFrames;
             }
             
-            if (this.numPlays != 0) {
+            if (this.playState.nums != 0) {
                 let mirror = this.direction.x <= 0 ? 0 : 1;
                 this.setFrame(this.frameId, mirror ^ face);
             }
