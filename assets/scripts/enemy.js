@@ -106,6 +106,9 @@ cc.Class({
 	},
 	
 	damage: function (damage, hitRecover = 0.0) {
+		if (damage <= 0) {
+			return;
+		}
 		this.hp -= damage;
 		this.hbar.node.active = true;
 		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;

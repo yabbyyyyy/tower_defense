@@ -25,6 +25,9 @@ cc.Class({
 		for (var base of this.bases) {
 			base.getComponent("base").levelScript = this;
 		}
+		for (var route of this.routes) {
+			route.active = false;
+		}
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
 		global.battle.field = this;
