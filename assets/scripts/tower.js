@@ -30,10 +30,6 @@ function update_dict (my_hit, data) {
 cc.Class({
     extends: animeComponent,
     properties: {
-		bulletSprite: {
-			default: null,
-			type: cc.SpriteFrame,
-		},
 		bulletPrefab: {
 			default: null,
 			type: cc.Prefab,
@@ -80,17 +76,11 @@ cc.Class({
 		if (ldata.bullet_scale) {
 			this.bulletScale = ldata.bullet_scale;
 		}
-		// update bullet sprite
-		if (ldata.hasOwnProperty("bullet_sprite")) {
-			cc.resources.load('sprites/' + ldata.bullet_sprite, cc.SpriteFrame, (err, result) => {
-				if (err) {
-					cc.log("Failed to load sprite: " + err);
-				} else {
-					this.bulletSprite = result;
-				}
-			});
+
+		if (ldata.bulletSprite) {
+			this.bulletSprite = ldata.bulletSprite;
 		}
-		
+
 		return true;
 	},
 	
@@ -121,7 +111,7 @@ cc.Class({
 	},
 		
 	update: function (dt) {
-		this.animeUpdate(dt)
+		this.animeUpdate(dt);
 		this.attackTimer += dt;
 		if (this.enemy != undefined) {
 			this.findDirection(this.enemy.getCenterPos());
@@ -143,7 +133,7 @@ cc.Class({
 			// fire bullets
 			let bullet = cc.instantiate(this.bulletPrefab);
 			let bulletPos = this.getCenterPos().add(this.direction.mul(100));
-			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletSprite, this.bulletScale);
+			bullet.getComponent("bullet").fire(bulletPos, target, this.prop, this.bulletScale, this.bulletSprite);
 			bullet.getComponent("bullet").updateAngle();
 			bullet.parent = this.node.parent;
 		}

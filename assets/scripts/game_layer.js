@@ -43,23 +43,7 @@ cc.Class({
 			}
 			let conf = this.enemiesConfig.json[wave.id];
 			enemyData[wave.id] = conf;
-			// load animations
-			cc.resources.load("sprites/" + conf.sprite, cc.JsonAsset, (err, res) => {
-				if (err) {
-					cc.log(err);
-				} else {
-					enemyData[wave.id].frameRects = res.json.frame_rects;
-					enemyData[wave.id].animations = res.json.animations;
-				}
-			});
-			// this has to be inside because the loading is async and it requires max_frames read from the json file
-			cc.resources.load('sprites/' + conf.sprite, cc.Texture2D, (err, tex) => {
-				if (err) {
-					cc.log(err);
-				} else {
-					enemyData[wave.id].texture = tex;
-				}
-			});
+			this.loadAnimation(enemyData[wave.id], "sprites/" + conf.sprite);
 		}
 		return enemyData;
 	},
@@ -68,25 +52,41 @@ cc.Class({
 		for (var tid of Object.keys(this.towersConfig.json)) {
 			let tower = this.towersConfig.json[tid];
 			for (let level of tower.levels) {
-				cc.resources.load("sprites/" + level.sprite, cc.JsonAsset, (err, res) => {
-					if (err) {
-						cc.log(err);
-					} else {
-						level.frameRects = res.json.frame_rects;
-						level.animations = res.json.animations;
-					}
-				});
-				// this has to be inside because the loading is async and it requires max_frames read from the json file
-				cc.resources.load('sprites/' + level.sprite, cc.Texture2D, (err, tex) => {
-					if (err) {
-						cc.log(err);
-					} else {
-						level.texture = tex;
-					}
-				});
+				this.loadAnimation(level, "sprites/" + level.sprite);
+				// bullet sprite
+				if (level.hasOwnProperty("bullet_sprite")) {
+					cc.resources.load('sprites/' + level.bullet_sprite, cc.SpriteFrame, (err, frame) => {
+						if (err) {
+							cc.log(err + ": sprites/" + level.bullet_sprite);
+						} else {
+							level.bulletSprite = frame;
+						}
+					});
+				}
 			}
 		}
 		return this.towersConfig.json;
+	},
+
+	loadAnimation: function (container, path) {
+		// animation actions
+		cc.resources.load(path, cc.JsonAsset, (err, res) => {
+			if (err) {
+				cc.log(err + ": " + path);
+			} else {
+				container.frameRects = res.json.frame_rects;
+				container.animations = res.json.animations;
+			}
+		});
+
+		// animation texture
+		cc.resources.load(path, cc.Texture2D, (err, tex) => {
+			if (err) {
+				cc.log(err + ": " + path);
+			} else {
+				container.texture = tex;
+			}
+		});
 	},
 
     start () {

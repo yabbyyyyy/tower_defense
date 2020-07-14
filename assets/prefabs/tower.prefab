@@ -193,9 +193,6 @@
     "sprite": {
       "__id__": 3
     },
-    "bulletSprite": {
-      "__uuid__": "8f5e0fef-a882-4534-9c79-9c775f2dfe00"
-    },
     "bulletPrefab": {
       "__uuid__": "734cb8ca-cbc6-463f-9c6a-dbbc4bef4db3"
     },
