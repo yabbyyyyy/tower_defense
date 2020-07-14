@@ -129,7 +129,7 @@ cc.Class({
 		case UnitState.Goal:
             this.unregister();
 			global.event.trigger("enemy_goal");
-			cc.tween(this.node).to(1.0, {opacity: 0}).call(this.node.destro.bind(this.node)).start();
+			cc.tween(this.node).to(1.0, {opacity: 0}).call(this.node.destroy.bind(this.node)).start();
 			break;
 		case UnitState.Dead:
 			this.unregister();

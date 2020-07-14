@@ -41,7 +41,8 @@
         "aoe_range": 100,
         "aspd": 0.15,
         "bullet_sprite": "bullet",
-        "bullet_speed": 1200
+        "bullet_speed": 1200,
+        "lock": false
       },
       {
         "sprite": "tower_b_2",
