@@ -43,18 +43,17 @@ cc.Class({
 	},
     
     getAnimeDuration: function (sid) {
-        let aid = sid*2 + (this.direction.y <= 0 ? 0 : 1);
-        if (!this.animations || aid >= this.animations.length) {
+        if (!this.animations || !this.animations.hasOwnProperty(sid)) {
             return 0.;
         }
-        return this.animations[aid].speed * this.animations[aid].image_n.length;
+        let face = this.direction.y <= 0 ? 0 : 1;
+        return this.animations[sid][face].speed * this.animations[sid][face].image_n.length;
     },
     // play the corresponding animation for a number of times, nums < 0 means inifinite repeats
     // set restore to restore the previous anime play state
     // default speed unit is 40 ms (1000./40.)
     playAnime: function (sid, nums = 1, speed = 1.0, restore = false) {
-        let aid = sid*2 + (this.direction.y <= 0 ? 0 : 1);
-        if (!this.animations || aid >= this.animations.length) {
+        if (!this.animations || !this.animations.hasOwnProperty(sid)) {
             return false;
         }
 
@@ -64,8 +63,7 @@ cc.Class({
             this.animTimer = 0;
             this.frameId = 0;
         } else {
-            this.animeId = aid;
-            this.currAnim = this.animations[aid];
+            this.currAnim = this.animations[sid];
 		    this.animTimer = 0;
             this.frameId = 0;
             if (restore & !this.prevPlayState) {
@@ -76,8 +74,7 @@ cc.Class({
 		return true;
     },
     
-	setFrame: function (fid, mirror = 0) {
-        let animeSet = this.currAnim;
+	setFrame: function (animeSet, fid, mirror = 0) {
         let imid = animeSet.image_n[fid];
 		this.sprite.spriteFrame = this.frames[imid];
 		this.sprite.spriteFrame.setFlipX(mirror ^ animeSet.direction[fid]);
@@ -103,18 +100,15 @@ cc.Class({
         }
         
         this.animTimer += dt*this.playState.speed*25;
+        // check facing direction
+        let face = this.direction.y <= 0 ? 0 : 1;
 
-        if (this.animTimer >= this.currAnim.speed) {
+        if (this.animTimer >= this.currAnim[face].speed) {
             this.animTimer = 0;
             this.frameId += 1;
-            // check if we need to change set
-            let face = this.direction.y <= 0 ? 0 : 1;
-            if (face != (this.animeId % 2)) {
-                this.animeId = Math.floor(this.animeId/2)*2 + face;
-                this.currAnim = this.animations[this.animeId];
-            }
+
             // check if frame id exceeds the maximum numbers
-            let nFrames = this.currAnim.image_n.length;
+            let nFrames = this.currAnim[face].image_n.length;
             if (this.frameId >= nFrames) {
                 this.playState.nums -= 1;
                 this.frameId = this.frameId % nFrames;
@@ -122,7 +116,7 @@ cc.Class({
             
             if (this.playState.nums != 0) {
                 let mirror = this.direction.x <= 0 ? 0 : 1;
-                this.setFrame(this.frameId, mirror ^ face);
+                this.setFrame(this.currAnim[face], this.frameId, mirror ^ face);
             }
         }
     },
