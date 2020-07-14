@@ -1,7 +1,7 @@
 {
   "0": {
     "name": "lunatic",
-    "sprite": "lunatic",
+    "sprite": "poring",
     "scale": 1.5,
     "speed": 80,
     "hp": 25,

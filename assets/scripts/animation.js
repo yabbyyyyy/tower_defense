@@ -13,10 +13,14 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS
     initAnimation: function (data) {
-        if (!this.sprite) {
-            var node = new cc.Node("sprite");
-            this.sprite = node.addComponent(cc.Sprite);
-            node.parent = this.node;
+        if (!this.sprites) {
+            this.sprites = [];
+            // 15 subframes
+            for (let i = 0; i < 15; ++i) {
+                var node = new cc.Node("sprite");
+                this.sprites.push(node.addComponent(cc.Sprite));
+                node.parent = this.node;
+            }
         }
 		// animation frames
 		this.frames = [];
@@ -88,12 +92,28 @@ cc.Class({
     },
     
 	setFrame: function (animeSet, fid, mirror = 0) {
-        let imid = animeSet.image_n[fid];
-		this.sprite.spriteFrame = this.frames[imid];
-		this.sprite.spriteFrame.setFlipX(mirror ^ animeSet.direction[fid]);
-		this.sprite.node.scale = cc.v2(this.scale * animeSet.scale_x[fid], this.scale * animeSet.scale_y[fid]);
-		this.sprite.node.position = cc.v2(animeSet.offset_x[fid], animeSet.offset_y[fid]);
-		this.sprite.node.angle = animeSet.rotation[fid] * (mirror ? -1 : 1);
+        let image_n = animeSet.image_n[fid];
+        let direction = animeSet.direction[fid];
+        let scale_x = animeSet.scale_x[fid];
+        let scale_y = animeSet.scale_y[fid];
+        let offset_x = animeSet.offset_x[fid];
+        let offset_y = animeSet.offset_y[fid];
+        let rotation = animeSet.rotation[fid];
+        let opacity = animeSet.opacity[fid];
+
+        // loop over all subframes
+        for (let i = 0; i < this.sprites.length; ++i) {
+            if (i >= image_n.length) {
+                this.sprites[i].spriteFrame = null;
+                continue;
+            }
+            this.sprites[i].spriteFrame = this.frames[image_n[i]];
+            this.sprites[i].spriteFrame.setFlipX(mirror ^ direction[i]);
+            this.sprites[i].node.scale = cc.v2(this.scale * scale_x[i], this.scale * scale_y[i]);
+            this.sprites[i].node.position = cc.v2(offset_x[i], offset_y[i]);
+            this.sprites[i].node.angle = rotation[i] * (mirror ? -1 : 1);
+            this.sprites[i].node.opacity = opacity[i];
+        }
 	},
 
     // this should be called inside update(dt)
@@ -135,7 +155,7 @@ cc.Class({
     },
 
     getCenterPos: function() {
-        return this.node.position.add(this.sprite.node.position);
+        return this.node.position.add(this.sprites[0].node.position);
     },
     // onLoad () {},
 
