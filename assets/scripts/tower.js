@@ -128,8 +128,7 @@ cc.Class({
 		if (this.attackTimer >= interval) {
 			this.attackTimer = 0.;
 			// attack anime
-			let speed = this.getAnimeDuration(UnitState.Attack)/interval;
-			this.playAnime(UnitState.Attack, 1, speed, true);
+			this.playAnimeOnce(UnitState.Attack, interval);
 			// fire bullets
 			let bullet = cc.instantiate(this.bulletPrefab);
 			let bulletPos = this.getCenterPos().add(this.direction.mul(100));

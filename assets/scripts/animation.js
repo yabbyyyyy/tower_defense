@@ -8,14 +8,16 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-		sprite: {
-			default: null,
-			type: cc.Sprite,
-		},
+
     },
 
     // LIFE-CYCLE CALLBACKS
     initAnimation: function (data) {
+        if (!this.sprite) {
+            var node = new cc.Node("sprite");
+            this.sprite = node.addComponent(cc.Sprite);
+            node.parent = this.node;
+        }
 		// animation frames
 		this.frames = [];
 		for (let rect of data.frameRects) {
@@ -33,6 +35,9 @@ cc.Class({
         } else {
             this.scale = 1.0;
         }
+
+        let size = this.frames[0].getOriginalSize();
+        return cc.v2(size.width*this.scale, size.height*this.scale);
     },
 
 	findDirection: function (dest) {
@@ -73,6 +78,14 @@ cc.Class({
         }
 		return true;
     },
+
+    playAnimeOnce: function (sid, time = -1, restore = true) {
+        let speed = 1.0;
+        if (time > 0) {
+            speed = this.getAnimeDuration(sid)/time;
+        }
+        this.playAnime(sid, 1, speed, restore);
+    },
     
 	setFrame: function (animeSet, fid, mirror = 0) {
         let imid = animeSet.image_n[fid];
@@ -80,7 +93,7 @@ cc.Class({
 		this.sprite.spriteFrame.setFlipX(mirror ^ animeSet.direction[fid]);
 		this.sprite.node.scale = cc.v2(this.scale * animeSet.scale_x[fid], this.scale * animeSet.scale_y[fid]);
 		this.sprite.node.position = cc.v2(animeSet.offset_x[fid], animeSet.offset_y[fid]);
-		this.sprite.node.angle = animeSet.rotation[fid];
+		this.sprite.node.angle = animeSet.rotation[fid] * (mirror ? -1 : 1);
 	},
 
     // this should be called inside update(dt)

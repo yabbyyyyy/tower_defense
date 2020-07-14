@@ -42,16 +42,15 @@ cc.Class({
 		this.findDirection(pathPoints[1].position);
 
 		// initialize animation
-		this.initAnimation(data);
+		let size = this.initAnimation(data);
 
 		// configure health bar
 		let hbarNode = cc.instantiate(this.healthBarPrefab);
 		this.hbar = hbarNode.getComponent(cc.ProgressBar);
 		hbarNode.zIndex = 1;
-		this.hbar.progress = 1.0;		
-				
-		this.updateHbarWidth(this.scale);
-		this.updateHbarPos();
+		this.hbar.progress = 1.0;
+
+		this.updateHbarWidth(size);
 		// hide health bar first
 		hbarNode.active = false;
 		// put it on the UI layer
@@ -62,16 +61,17 @@ cc.Class({
 		this.node.opacity = 255;
 	},
 
-	updateHbarWidth: function (scale = 1.0) {
-		let hwidth = this.sprite.node.width*scale;
-		this.hbar.node.width = hwidth;
-		this.hbar.totalLength = hwidth;
-		this.hbar.node.getChildByName("bar").position = cc.v3(-hwidth/2., 0, 0);
+	updateHbarWidth: function (size) {
+		this.hbar.width = size.x + 10;
+		this.hbar.height = size.y + 10;
+		this.hbar.node.width = size.x;
+		this.hbar.totalLength = size.x;
+		this.hbar.node.getChildByName("bar").position = cc.v3(-size.x/2., 0, 0);
 	},
 
 	updateHbarPos: function () {
 		if (this.hbar.node.active) {
-			this.hbar.node.position = this.node.position.add(cc.v2(0, this.sprite.node.height));
+			this.hbar.node.position = this.node.position.add(cc.v2(0, this.hbar.height));
 		}
 	},
 
@@ -112,10 +112,11 @@ cc.Class({
 		this.hp -= damage;
 		this.hbar.node.active = true;
 		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
-		this.playAnime(UnitState.Damage, 1, 2*this.vitality, true);
-		if (hitRecover > 0.01) {
-			this.speed = 0.2*this.originalSpeed;
-			cc.tween(this).to(hitRecover/Math.max(0.05, this.vitality), {speed: this.originalSpeed}).start();
+		let recover = hitRecover/Math.max(0.05, this.vitality);
+		if (recover > 0.01) {
+			this.speed = 0;
+			cc.tween(this).to(recover, {speed: this.originalSpeed}).start();
+			this.playAnimeOnce(UnitState.Damage, recover);
 		}
 		if (this.hp <= 0) {
 			this.setState(UnitState.Dead);
@@ -143,8 +144,11 @@ cc.Class({
 			break;
 		case UnitState.Dead:
 			this.unregister();
-			this.playAnime(UnitState.Dead);
-            cc.tween(this.node).to(2.0, {opacity: 0}).call(this.node.destroy.bind(this.node)).start();
+			this.playAnimeOnce(UnitState.Dead, -1, false);
+			cc.tween(this.node)
+				.to(2.0, {opacity: 255})
+				.to(1.0, {opacity: 0})
+				.call(this.node.destroy.bind(this.node)).start();
 			break;
 		default:
 			break;
