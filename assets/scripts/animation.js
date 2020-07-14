@@ -81,7 +81,7 @@ cc.Class({
 		this.sprite.node.width = size.width * this.scale * animeSet.scale_x[fid];
 		this.sprite.node.height = size.height * this.scale * animeSet.scale_y[fid];
 		this.sprite.node.position = cc.v2(animeSet.offset_x[fid], animeSet.offset_y[fid]);
-		this.sprite.node.angle = -animeSet.rotation[fid];
+		this.sprite.node.angle = animeSet.rotation[fid];
 	},
 
     // this should be called inside update(dt)
@@ -123,6 +123,10 @@ cc.Class({
                 this.setFrame(this.frameId, mirror ^ face);
             }
         }
+    },
+
+    getCenterPos: function() {
+        return this.node.position.add(this.sprite.node.position);
     },
     // onLoad () {},
 

@@ -27,7 +27,7 @@ cc.Class({
 		this.sprite.spriteFrame = sprite;
 		this.hit = hit;
 		this.setState(BulletState.Move);
-		this.setDestination(target.node.position);
+		this.setDestination(target.getCenterPos());
 		if (this.hit.lock) {
 			this.target = target;
 			global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
@@ -41,7 +41,7 @@ cc.Class({
 	update: function (dt) {
 		// update destination
 		if (this.target && (this.hit.lock)) {
-			this.setDestination(this.target.node.position);
+			this.setDestination(this.target.getCenterPos());
 		}
 
 		if (this.state == BulletState.Move) {

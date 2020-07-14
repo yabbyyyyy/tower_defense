@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "58328a17-d3f5-4a0e-a53e-71bbc4ab096e",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 900,
+  "height": 674,
+  "platformSettings": {},
+  "subMetas": {
+    "yegor-blinov-level-07": {
+      "ver": "1.0.4",
+      "uuid": "cbe02661-1775-4cca-b1a6-0a82df1dd485",
+      "rawTextureUuid": "58328a17-d3f5-4a0e-a53e-71bbc4ab096e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 900,
+      "height": 674,
+      "rawWidth": 900,
+      "rawHeight": 674,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

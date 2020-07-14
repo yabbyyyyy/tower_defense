@@ -24,6 +24,7 @@ cc.Class({
 		// pass this script to the base
 		for (var base of this.bases) {
 			base.getComponent("base").levelScript = this;
+			base.opacity = 0;
 		}
 		for (var route of this.routes) {
 			route.active = false;
