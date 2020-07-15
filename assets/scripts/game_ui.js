@@ -6,14 +6,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-		baseMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
-		towerMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
 		countDownLabel: {
 			default: null,
 			type: cc.Label,
@@ -76,36 +68,6 @@ cc.Class({
 		.by(duration, {opacity: -label.opacity, position: moveBy})
 		.call(label.destroy.bind(label))
 		.start();
-	},
-
-	callBaseMenu: function (base) {
-		this.closeMenu();
-		let menu = cc.instantiate(this.baseMenuPrefab);
-		menu.target = base;
-		this.popMenu(menu, base.node.position);
-	},
-
-	callTowerMenu: function (base, tower) {
-		this.closeMenu();
-		let menu = cc.instantiate(this.towerMenuPrefab);
-		menu.target = base;
-		this.popMenu(menu, base.node.position);
-	},
-
-	popMenu: function (menu, pos) {
-		this.menu = menu;
-		menu.controller = this;
-		menu.scale = 0.;
-		menu.position = pos;
-		menu.parent = this.node;
-		cc.tween(menu).to(0.1, {scale: 0.6}).start();
-	},
-
-    closeMenu: function () {
-		if (this.menu) {
-			this.menu.destroy();
-			this.menu = null;
-		}
 	},
 
     start () {

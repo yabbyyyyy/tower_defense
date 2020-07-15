@@ -2,7 +2,8 @@
 
 const BattleController = function (obj) {
 
-    obj.field = undefined;
+    obj.game = undefined;
+    obj.level = undefined;
     obj.ui = undefined;
 
     obj.atk_interval = function (aspd) {
@@ -10,13 +11,13 @@ const BattleController = function (obj) {
     };
 
     obj.damage = function (hit, target, pos = cc.v2(0, 0)) {
-        if (!this.field) {
+        if (!this.level) {
             console.log('Error: no battle field!');
             return;
         }
         // aoe damage
         if (hit.aoe_range > 0) {
-            for (var enemy of this.field.enemiesList) {
+            for (var enemy of this.level.enemiesList) {
                 if (!enemy) { continue; }
                 let dist = pos.sub(enemy.node.position).mag();
                 if (dist < hit.aoe_range/4.) {
@@ -32,7 +33,7 @@ const BattleController = function (obj) {
             this.attackOn(hit, target);
         // not locking
         } else {
-            for (var enemy of this.field.enemiesList) {
+            for (var enemy of this.level.enemiesList) {
                 if (!enemy) { continue; }
                 let dist = pos.sub(enemy.node.position).mag();
                 // default collision range

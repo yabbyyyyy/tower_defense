@@ -24,6 +24,7 @@ cc.Class({
 			this.loadTowers(this.configs['towers']);
 			this.startLevel(0);
 		});
+		global.battle.game = this;
 	},
 
 	startLevel: function (lvl) {
@@ -34,6 +35,7 @@ cc.Class({
 		let towerData = this.configs['towers'];
 		level.getComponent("level").configure(levelData, enemyData, towerData);
 		level.parent = this.node;
+		this.currLevel = level;
 	},
 
 	loadEnemies: function (enemies) {

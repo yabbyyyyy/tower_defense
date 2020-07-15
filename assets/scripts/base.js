@@ -24,10 +24,10 @@ cc.Class({
 			// check state and call the corresponding menu
 			switch (this.state) {
 			case BaseState.Empty:
-				global.battle.ui.callBaseMenu(this);
+				global.battle.level.callBaseMenu(this);
 				break;
 			case BaseState.BuiltTower:
-				global.battle.ui.callTowerMenu(this, this.tower);
+				global.battle.level.callTowerMenu(this, this.tower);
 				break;
 			default:
 				break;

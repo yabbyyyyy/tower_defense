@@ -14,6 +14,14 @@ cc.Class({
 			default: null,
 			type: cc.Prefab
 		},
+		baseMenuPrefab: {
+			default: null,
+			type: cc.Prefab
+		},
+		towerMenuPrefab: {
+			default: null,
+			type: cc.Prefab
+		},
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -31,7 +39,8 @@ cc.Class({
 		}
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
-		global.battle.field = this;
+		global.battle.level = this;
+		this.node.on(cc.Node.EventType.TOUCH_START, (event) => { this.closeMenu(); });
 	},
 	
 	configure: function (levelConf, enemyConf, towerConf) {
@@ -123,6 +132,37 @@ cc.Class({
 		}
 	},
 	
+	// menus
+	callBaseMenu: function (base) {
+		this.closeMenu();
+		let menu = cc.instantiate(this.baseMenuPrefab);
+		menu.target = base;
+		this.popMenu(menu, base.node.position);
+	},
+
+	callTowerMenu: function (base, tower) {
+		this.closeMenu();
+		let menu = cc.instantiate(this.towerMenuPrefab);
+		menu.target = base;
+		this.popMenu(menu, base.node.position);
+	},
+
+	popMenu: function (menu, pos) {
+		this.menu = menu;
+		menu.controller = this;
+		menu.scale = 0.;
+		menu.position = pos;
+		menu.parent = this.node;
+		cc.tween(menu).to(0.1, {scale: 0.6}).start();
+	},
+
+    closeMenu: function () {
+		if (this.menu) {
+			this.menu.destroy();
+			this.menu = null;
+		}
+	},
+
     start () {
 
     },
