@@ -31,7 +31,7 @@ cc.Class({
 		this.setDestination(target.getCenterPos());
 		if (this.hit.lock) {
 			this.target = target;
-			global.event.register("enemy" + this.target.nid, () => { this.target = undefined; });
+			global.event.register("null_target" + this.target.nid, () => { this.target = undefined; });
 		}
 	},
 

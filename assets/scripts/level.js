@@ -31,6 +31,7 @@ cc.Class({
 		}
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
+		global.event.register("enemy_destroy", this.enemyDestroy.bind(this));
 		global.battle.field = this;
 	},
 	
@@ -40,6 +41,8 @@ cc.Class({
 		this.enemiesData = enemyConf;
 		this.towersData = towerConf;
 		this.enemiesList = [];
+		this.resources = [0];
+		this.resourcesRes = [0];
 	},
 	
 	closeMenu: function () {
@@ -69,7 +72,7 @@ cc.Class({
 
 			// register enemy with an ID
 			let nid = this.enemiesList.length;
-			enemyScript.configure(nid, enemyData, this.routes);
+			enemyScript.configure(this.wave, nid, enemyData, this.routes);
 
 			// add an event for removing this enemy
 			this.enemiesList.push(enemyScript);
@@ -92,6 +95,23 @@ cc.Class({
 	enemyGoal: function () {
 		this.life--;
 		cc.log("Life left: " + this.life);
+	},
+
+	enemyDestroy: function (wave, nid, pos) {
+		this.enemiesList[nid] = undefined;
+		global.event.trigger("null_target" + nid);
+		global.event.off("null_target" + nid);
+
+		let waveData = this.wavesData[wave];
+		let increment = [];
+		for (let i = 0; i < this.resources.length; ++i) {
+			this.resourcesRes[i] += waveData.resources[i];
+			let inc = Math.floor(this.resourcesRes[i]) - this.resources[i];
+			increment.push(inc);
+			this.resources[i] += inc;
+		}
+		global.battle.uiLayer.popResources(increment, pos.add(cc.v2(0, 80)));
+		global.battle.uiLayer.showResources(this.resources);
 	},
 	
 	update: function (dt) {

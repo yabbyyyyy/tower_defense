@@ -25,7 +25,8 @@ cc.Class({
 		this.hbar.node.destroy();
 	},
 
-	configure: function (nid, data, pathPoints) {
+	configure: function (wave, nid, data, pathPoints) {
+		this.wave = wave;
 		this.nid = nid;
 		// basic attributes
 		this.hp = data.hp;
@@ -162,8 +163,7 @@ cc.Class({
 	
 	unregister: function () {
 		this.hbar.node.active = false;
-		global.event.trigger("enemy" + this.nid, this.nid);
-		global.event.off("enemy" + this.nid);
+		global.event.trigger("enemy_destroy", this.wave, this.nid, this.node.position);
 	},
 
     start () {

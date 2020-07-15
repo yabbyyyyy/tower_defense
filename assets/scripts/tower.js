@@ -106,7 +106,7 @@ cc.Class({
 	
 	setEnemy: function (enemy) {
 		this.enemy = enemy;
-		global.event.register("enemy" + enemy.nid, () => { this.enemy = undefined; });
+		global.event.register("null_target" + enemy.nid, () => { this.enemy = undefined; });
 		// this.attackTimer = 0.;
 	},
 		
