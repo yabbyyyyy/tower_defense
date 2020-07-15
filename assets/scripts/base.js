@@ -26,6 +26,8 @@ cc.Class({
     onLoad: function () {
         this.state = BaseState.Empty;
         this.node.on(cc.Node.EventType.TOUCH_START, (event) => {
+			// do not pass it to parent nodes
+			event.stopPropagation();
 			// check state and call the corresponding menu
 			switch (this.state) {
 			case BaseState.Empty:
@@ -49,7 +51,7 @@ cc.Class({
 		menu.scale = 0.;
 		menu.position = this.node.position;
 		menu.parent = this.levelScript.node;
-		cc.tween(menu).to(0.2, {scale: 0.6}).start();
+		cc.tween(menu).to(0.1, {scale: 0.6}).start();
 
         menu.target = this;
 		this.setState(BaseState.Menu);

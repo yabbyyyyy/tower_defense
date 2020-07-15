@@ -23,20 +23,26 @@ cc.Class({
 
     onLoad: function () {
         global.battle.resources = this;
-        this.resources = [0, 0];
-        this.resourcesRes = [0., 0.];
+        // set a tolerance for Math.floor
+        this.resources = [1e-5, 1e-5];
     },
 
-    add: function (res, pop=false, pos=cc.v2.zero) {
-        cc.log("called");
+    add: function (res, pop = false, pos = cc.v2(700, 300)) {
         let increment = [];
         for (let i = 0; i < this.resources.length; ++i) {
-            this.resourcesRes[i] += res[i];
-            increment.push(Math.floor(this.resourcesRes[i]) - this.resources[i]);
-            this.resources[i] += increment[i];
+            let prevRes = Math.floor(this.resources[i]);
+            this.resources[i] += res[i];
+            increment.push(Math.floor(this.resources[i]) - prevRes);
         }
         if (pop) {
             this.popResources(increment, pos);
+        }
+    },
+
+    set: function (res) {
+        for (let i = 0; i < this.resources.length; ++i) {
+            // set a tolerance for Math.floor
+            this.resources[i] = res[i] + 1e-5;
         }
     },
 
@@ -52,7 +58,7 @@ cc.Class({
             
 			let label = cc.instantiate(this.popLabels[i]);
 			label.zIndex = 99;
-			label.position = position.add(cc.v2(15*showed, -15*showed));
+			label.position = position.add(cc.v2(25*showed, -15*showed));
 
 			let labelScript = label.getComponent(cc.Label);		
 			labelScript.string = (num > 0 ? "+" : "-") + Math.abs(num);
@@ -70,7 +76,7 @@ cc.Class({
 
     update: function (dt) {
         for (let i = 0; i < this.resLabels.length; ++i) {
-            this.resLabels[i].string = this.resources[i];
+            this.resLabels[i].string = Math.floor(this.resources[i]);
         }
     },
 });
