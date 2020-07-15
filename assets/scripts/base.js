@@ -49,7 +49,7 @@ cc.Class({
 		menu.scale = 0.;
 		menu.position = this.node.position;
 		menu.parent = this.levelScript.node;
-		cc.tween(menu).to(0.3, {scale: 0.5}).start();
+		cc.tween(menu).to(0.2, {scale: 0.6}).start();
 
         menu.target = this;
 		this.setState(BaseState.Menu);

@@ -12,6 +12,7 @@ cc.Class({
     // onLoad () {},
 	
 	buttonClick: function (event, customData) {
+		cc.log(customData);
 		switch (customData) {
 		case "sell":
 			this.node.target.sellTower();

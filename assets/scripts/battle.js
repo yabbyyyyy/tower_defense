@@ -4,6 +4,7 @@ const BattleController = function (obj) {
 
     obj.field = undefined;
     obj.uiLayer = undefined;
+    obj.resources = undefined;
 
     obj.atk_interval = function (aspd) {
         return 1./aspd;

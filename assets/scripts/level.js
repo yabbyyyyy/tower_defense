@@ -101,17 +101,10 @@ cc.Class({
 		global.event.trigger("null_target" + nid);
 		global.event.off("null_target" + nid);
 
-		if (!reward) { return; }
-		let waveData = this.wavesData[wave];
-		let increment = [];
-		for (let i = 0; i < this.resources.length; ++i) {
-			this.resourcesRes[i] += waveData.resources[i];
-			let inc = Math.floor(this.resourcesRes[i]) - this.resources[i];
-			increment.push(inc);
-			this.resources[i] += inc;
+		if (reward && global.battle.resources) {
+			let waveData = this.wavesData[wave];
+			global.battle.resources.add(waveData.resources, true, pos);
 		}
-		global.battle.uiLayer.popResources(increment, pos.add(cc.v2(0, 80)));
-		global.battle.uiLayer.showResources(this.resources);
 	},
 	
 	update: function (dt) {

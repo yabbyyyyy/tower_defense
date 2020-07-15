@@ -14,14 +14,6 @@ cc.Class({
 			default: null,
 			type: cc.Prefab,
 		},
-		coinLabel: {
-			default: null,
-			type: cc.Prefab,
-		},
-		resourceLabels: {
-			default: [],
-			type: cc.Label,
-		}
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -76,26 +68,6 @@ cc.Class({
 		.by(duration, {opacity: -label.opacity, position: moveBy})
 		.call(label.destroy.bind(label))
 		.start();
-	},
-
-	popResources: function (incre, position, duration=3.0, moveBy=cc.v3(0, 300, 0)) {
-		for (var num of incre) {
-			if (num == 0) { continue; }
-			let label = cc.instantiate(this.coinLabel);
-			label.zIndex = 99;
-			label.position = position;
-
-			let labelScript = label.getComponent(cc.Label);		
-			labelScript.string = (num > 0 ? "+" : "-") + Math.abs(num);
-			let icon = label.getChildByName("icon");
-			icon.position.x = -((label.width + icon.width)/2. + 5);
-
-			label.parent = this.node;
-			cc.tween(label)
-			.by(duration, {opacity: -label.opacity, position: moveBy})
-			.call(label.destroy.bind(label))
-			.start();
-		}
 	},
 
     start () {
