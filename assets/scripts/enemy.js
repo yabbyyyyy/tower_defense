@@ -112,6 +112,7 @@ cc.Class({
 		}
 		this.hp -= damage;
 		this.hbar.node.active = true;
+		this.updateHbarPos();
 		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
 		let recover = hitRecover/Math.max(0.05, this.vitality);
 		if (recover > 0.01) {
