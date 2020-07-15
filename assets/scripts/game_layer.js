@@ -45,7 +45,6 @@ cc.Class({
 
 	loadTowers: function (towers) {
 		for (var tid of Object.keys(towers)) {
-			cc.log(tid);
 			let tower = towers[tid];
 			for (let level of tower.levels) {
 				this.loadAnimation(level, "sprites/" + level.sprite);

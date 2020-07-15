@@ -46,8 +46,9 @@ cc.Class({
 			return;
 		}
         let menu = cc.instantiate(prefab);
-        menu.parent = this.levelScript.node;
-        menu.position = this.node.position;
+		menu.parent = this.levelScript.node;
+		menu.position = this.node.position;
+
         menu.target = this;
 		this.setState(BaseState.Menu);
         this.menu = menu;
