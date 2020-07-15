@@ -164,7 +164,6 @@ cc.Class({
 	
 	unregister: function (reward) {
 		this.hbar.node.active = false;
-		cc.log("destroy: " + this.nid);
 		global.battle.field.enemyDestroy(reward, this.wave, this.nid, this.node.position);
 	},
 

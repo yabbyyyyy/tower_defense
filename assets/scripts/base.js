@@ -46,8 +46,10 @@ cc.Class({
 			return;
 		}
         let menu = cc.instantiate(prefab);
-		menu.parent = this.levelScript.node;
+		menu.scale = 0.;
 		menu.position = this.node.position;
+		menu.parent = this.levelScript.node;
+		cc.tween(menu).to(0.3, {scale: 0.5}).start();
 
         menu.target = this;
 		this.setState(BaseState.Menu);

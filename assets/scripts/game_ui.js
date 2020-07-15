@@ -53,7 +53,7 @@ cc.Class({
 		}
 	},
 
-	popDamage: function (damage, position, duration = 1.0, crit=false, moveBy = cc.v3(-30, 80, 0)) {
+	popDamage: function (damage, position, duration = 1.0, crit=false, moveBy = cc.v3(80, 80, 0)) {
 		let label = cc.instantiate(this.damageLabel);
 		label.zIndex = 10;
 		label.position = position;
@@ -62,7 +62,7 @@ cc.Class({
 		
 		if (crit) {
 			labelScript.string = damage + "!";
-			label.color = new cc.Color(255, 215, 0);
+			label.color = new cc.Color(255, 255, 0);
 			labelScript.fontSize = 50;
 			labelScript.lineHeight = 50;
 		} else {
