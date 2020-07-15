@@ -1,62 +1,63 @@
 {
 	"level_001": {
-    	"life": 10,
+		"life": 10,
+		"resources": [300, 5],
 		"waves": [
 			{
         		"id": "poring",
 				"wait": 0.0,
         		"interval": 1.0,
 				"count": 20,
-				"resources": [10, 0.1]
+				"reward": [10, 0.5]
 			},
 			{
         		"id": "lunatic",
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 20,
-				"resources": [15, 0.1]
+				"reward": [15, 0.5]
 			},
 			{
         		"id": "mantis",
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 20,
-				"resources": [20, 0.1]
+				"reward": [20, 1.0]
 			},
 			{
         		"id": "wolf",
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 30,
-				"resources": [25, 0.1]
+				"reward": [25, 1.5]
 			},
 			{
         		"id": "majoruros",
 				"wait": 5.0,
         		"interval": 2.5,
 				"count": 40,
-				"resources": [25, 0.1]
+				"reward": [25, 1.5]
 			},
 			{
         		"id": "marduk",
 				"wait": 5.0,
         		"interval": 1.5,
 				"count": 25,
-				"resources": [40, 0.2]
+				"reward": [40, 2.0]
 			},
 			{
         		"id": "owl_duke",
 				"wait": 10.0,
         		"interval": 1.0,
 				"count": 15,
-				"resources": [80, 0.4]
+				"reward": [80, 5.0]
 			},
 			{
         		"id": "randgris",
 				"wait": 10.0,
         		"interval": 5.0,
 				"count": 5,
-				"resources": [300, 1.0]
+				"reward": [300, 20.0]
 			}
 		]
 	}

@@ -36,18 +36,11 @@ cc.Class({
 	
 	configure: function (levelConf, enemyConf, towerConf) {
 		this.life = levelConf.life;
+		global.resources.set(levelConf.resources);
 		this.wavesData = levelConf.waves;
 		this.enemiesData = enemyConf;
 		this.towersData = towerConf;
 		this.enemiesList = [];
-		this.resources = [0];
-		this.resourcesRes = [0];
-	},
-	
-	closeMenu: function () {
-		for (var base of this.bases) {
-			base.getComponent("base").closeMenu();
-		}
 	},
 	
 	onDestroy: function () {
@@ -101,9 +94,9 @@ cc.Class({
 		global.event.trigger("null_target" + nid);
 		global.event.off("null_target" + nid);
 
-		if (reward && global.battle.resources) {
+		if (reward) {
 			let waveData = this.wavesData[wave];
-			global.battle.resources.add(waveData.resources, true, pos);
+			global.resources.add(waveData.reward, true, pos);
 		}
 	},
 	

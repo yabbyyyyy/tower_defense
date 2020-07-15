@@ -3,8 +3,7 @@
 const BattleController = function (obj) {
 
     obj.field = undefined;
-    obj.uiLayer = undefined;
-    obj.resources = undefined;
+    obj.ui = undefined;
 
     obj.atk_interval = function (aspd) {
         return 1./aspd;
@@ -48,16 +47,16 @@ const BattleController = function (obj) {
 
     obj.attackOn = function (hit, target, mod = 1.0) {
         if (target) {
-            let damage = (hit.atk - target.defense)*mod;
+            let damage = hit.atk - target.defense;
             let crit = (hit.crit > 0.) && (Math.random()*100. < hit.crit);
             if (crit) {
                 damage *= (1. + hit.crit_mod/100.);
             }
-            target.damage(damage, hit.recover*mod);
+            target.damage(damage*mod, hit.recover*mod);
             // show damage on UI layer
             let damageNum = Math.round(damage);
-            if ((damageNum > 0) && (obj.uiLayer)) {
-                this.uiLayer.popDamage(damageNum, target.node.position.add(cc.v2(0, 50)), 0.5, crit);
+            if ((damageNum > 0) && (obj.ui)) {
+                this.ui.popDamage(damageNum, target.node.position.add(cc.v2(0, 50)), 0.5, crit);
             }
         }
     }

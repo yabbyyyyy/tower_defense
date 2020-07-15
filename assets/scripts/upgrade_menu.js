@@ -12,7 +12,7 @@ cc.Class({
     // onLoad () {},
 	
 	buttonClick: function (event, customData) {
-		cc.log(customData);
+		// cc.log(customData);
 		switch (customData) {
 		case "sell":
 			this.node.target.sellTower();
@@ -23,7 +23,8 @@ cc.Class({
 		default:
 			cc.log("Unknown upgrade menu data << " + customData);
 			break;
-		}		
+		}
+		this.node.controller.closeMenu();
 	},
 
     start () {

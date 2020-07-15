@@ -13,9 +13,10 @@ cc.Class({
 		
 	},
 
-	buttonClick:function (event, customData) {
+	buttonClick: function (event, customData) {
 		// cc.log("clicked " + customData);
-		this.node.target.buildTower(customData);
+        this.node.target.buildTower(customData);
+        this.node.controller.closeMenu();
 	},
 	
     start () {

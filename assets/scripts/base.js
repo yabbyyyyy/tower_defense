@@ -1,24 +1,17 @@
+import global from './global'
+
 // tower base script
 const BaseState = {
 	Invalid: -1,
 	Empty: 0,
 	BuiltTower: 1,
-	Menu: 21,
-	UpgradeMenu: 22,
 };
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-		buildMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
-		upgradeMenuPrefab: {
-			default: null,
-			type: cc.Prefab
-		},
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -31,38 +24,15 @@ cc.Class({
 			// check state and call the corresponding menu
 			switch (this.state) {
 			case BaseState.Empty:
-				this.showMenu(this.buildMenuPrefab);
+				global.battle.ui.callBaseMenu(this);
 				break;
 			case BaseState.BuiltTower:
-				this.showMenu(this.upgradeMenuPrefab);
+				global.battle.ui.callTowerMenu(this, this.tower);
 				break;
 			default:
 				break;
 			}
 		})
-    },
-
-	showMenu: function (prefab) {
-		this.levelScript.closeMenu();
-		if (this.state == BaseState.Menu) {
-			return;
-		}
-        let menu = cc.instantiate(prefab);
-		menu.scale = 0.;
-		menu.position = this.node.position;
-		menu.parent = this.levelScript.node;
-		cc.tween(menu).to(0.1, {scale: 0.6}).start();
-
-        menu.target = this;
-		this.setState(BaseState.Menu);
-        this.menu = menu;
-    },
-    
-    closeMenu: function () {
-        if (this.state == BaseState.Menu) {
-            this.menu.destroy();
-            this.state = this.prevState;
-        }
     },
 
 	setState: function (state) {
@@ -83,8 +53,6 @@ cc.Class({
     },
     
 	buildTower: function (data) {
-		// cc.log("build tower " + data);
-		this.levelScript.closeMenu();
 		// use single type for now
 		let tower = cc.instantiate(this.levelScript.towerPrefab);
         // cc.log(data + ", " + JSON.stringify(this.towersData[data]));
@@ -97,14 +65,12 @@ cc.Class({
 	},
 	
 	sellTower: function () {
-		this.levelScript.closeMenu();
 		this.tower.node.destroy();
 		this.tower = undefined;
 		this.setState(BaseState.Empty);
 	},
 	
 	upgradeTower: function () {
-        this.levelScript.closeMenu();
 		this.tower.upgrade();
     },
     

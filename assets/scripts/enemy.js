@@ -55,7 +55,7 @@ cc.Class({
 		// hide health bar first
 		hbarNode.active = false;
 		// put it on the UI layer
-		hbarNode.parent = global.battle.uiLayer.node;
+		hbarNode.parent = global.battle.ui.node;
 		
 		// state
 		this.setState(UnitState.Move);

@@ -22,7 +22,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-        global.battle.resources = this;
+        global.resources = this;
         // set a tolerance for Math.floor
         this.resources = [1e-5, 1e-5];
     },
