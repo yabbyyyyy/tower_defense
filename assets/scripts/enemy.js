@@ -107,7 +107,7 @@ cc.Class({
 	},
 	
 	damage: function (damage, hitRecover = 0.0) {
-		if (damage <= 0) {
+		if ((damage <= 0) || (this.state == UnitState.Goal) || (this.state == UnitState.Dead)) {
 			return;
 		}
 		this.hp -= damage;
@@ -140,12 +140,12 @@ cc.Class({
             this.playAnime(UnitState.Move, -1);
 			break;
 		case UnitState.Goal:
-            this.unregister();
+            this.unregister(false);
 			global.event.trigger("enemy_goal");
 			cc.tween(this.node).to(1.0, {opacity: 0}).call(this.node.destroy.bind(this.node)).start();
 			break;
 		case UnitState.Dead:
-			this.unregister();
+			this.unregister(true);
 			this.playAnimeOnce(UnitState.Dead, -1, false);
 			cc.tween(this.node)
 				.to(3.0, {})
@@ -162,9 +162,10 @@ cc.Class({
 		// cc.log("Set Enemy State: " + this.state);
 	},
 	
-	unregister: function () {
+	unregister: function (reward) {
 		this.hbar.node.active = false;
-		global.event.trigger("enemy_destroy", this.wave, this.nid, this.node.position);
+		cc.log("destroy: " + this.nid);
+		global.battle.field.enemyDestroy(reward, this.wave, this.nid, this.node.position);
 	},
 
     start () {

@@ -31,7 +31,6 @@ cc.Class({
 		}
 		global.event.register("level_start", this.levelStart.bind(this));
 		global.event.register("enemy_goal", this.enemyGoal.bind(this));
-		global.event.register("enemy_destroy", this.enemyDestroy.bind(this));
 		global.battle.field = this;
 	},
 	
@@ -97,11 +96,12 @@ cc.Class({
 		cc.log("Life left: " + this.life);
 	},
 
-	enemyDestroy: function (wave, nid, pos) {
+	enemyDestroy: function (reward, wave, nid, pos) {
 		this.enemiesList[nid] = undefined;
 		global.event.trigger("null_target" + nid);
 		global.event.off("null_target" + nid);
 
+		if (!reward) { return; }
 		let waveData = this.wavesData[wave];
 		let increment = [];
 		for (let i = 0; i < this.resources.length; ++i) {
