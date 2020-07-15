@@ -115,7 +115,7 @@ cc.Class({
 		let recover = hitRecover/Math.max(0.05, this.vitality);
 		if (recover > 0.01) {
 			this.speed = 0;
-			cc.tween(this).to(recover, {speed: this.originalSpeed}).start();
+			cc.tween(this).to(recover, {speed: this.originalSpeed}, { easing: t => t*t }).start();
 			this.playAnimeOnce(UnitState.Damage, recover);
 		}
 		if (this.hp <= 0) {

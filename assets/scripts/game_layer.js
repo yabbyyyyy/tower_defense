@@ -3,20 +3,7 @@ import global from './global'
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
-		levelsConfig: {
-			default: null,
-			type: cc.JsonAsset,
-		},
-		enemiesConfig: {
-			default: null,
-			type: cc.JsonAsset,
-		},
-		towersConfig: {
-			default: null,
-			type: cc.JsonAsset,
-		},
 		levelPrefabs: {
 			default: [],
 			type: cc.Prefab
@@ -26,46 +13,51 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
-		let level = cc.instantiate(this.levelPrefabs[0]);
-		let levelData = this.levelsConfig.json[level.name];
-		let enemyData = this.loadEnemies(levelData);
-		let towerData = this.loadTowers();
+		// load configurations
+		cc.resources.loadDir("configs", cc.JsonAsset, (err, assets) => {
+			if (err) { cc.log(err); return ; }
+			this.configs = {};
+			for (let asset of assets) {
+				this.configs[asset.name] = asset.json;
+			}
+			this.loadEnemies(this.configs['enemies']);
+			this.loadTowers(this.configs['towers']);
+			this.startLevel(0);
+		});
+	},
 
+	startLevel: function (lvl) {
+		// instantiate level
+		let level = cc.instantiate(this.levelPrefabs[lvl]);
+		let levelData = this.configs["levels"][level.name];
+		let enemyData = this.configs['enemies'];
+		let towerData = this.configs['towers'];
 		level.getComponent("level").configure(levelData, enemyData, towerData);
 		level.parent = this.node;
 	},
 
-	loadEnemies: function (levelData) {
-		let enemyData = {};
-		for (let wave of levelData.waves) {
-			if (enemyData.hasOwnProperty(wave.id) || !this.enemiesConfig.json.hasOwnProperty(wave.id)) {
-				continue;
-			}
-			let conf = this.enemiesConfig.json[wave.id];
-			enemyData[wave.id] = conf;
-			this.loadAnimation(enemyData[wave.id], "sprites/" + conf.sprite);
+	loadEnemies: function (enemies) {
+		for (var tid of Object.keys(enemies)) {
+			let enemy = enemies[tid];
+			this.loadAnimation(enemy, "sprites/" + enemy.sprite);
 		}
-		return enemyData;
 	},
 
-	loadTowers: function () {
-		for (var tid of Object.keys(this.towersConfig.json)) {
-			let tower = this.towersConfig.json[tid];
+	loadTowers: function (towers) {
+		for (var tid of Object.keys(towers)) {
+			cc.log(tid);
+			let tower = towers[tid];
 			for (let level of tower.levels) {
 				this.loadAnimation(level, "sprites/" + level.sprite);
 				// bullet sprite
 				if (level.hasOwnProperty("bullet_sprite")) {
-					cc.resources.load('sprites/' + level.bullet_sprite, cc.SpriteFrame, (err, frame) => {
-						if (err) {
-							cc.log(err + ": sprites/" + level.bullet_sprite);
-						} else {
-							level.bulletSprite = frame;
-						}
+					cc.resources.load('textures/' + level.bullet_sprite, cc.SpriteFrame, (err, frame) => {
+						if (err) { cc.log(err); return; }
+						level.bulletSprite = frame;
 					});
 				}
 			}
 		}
-		return this.towersConfig.json;
 	},
 
 	loadAnimation: function (container, path) {
