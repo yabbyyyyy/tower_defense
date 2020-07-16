@@ -166,30 +166,21 @@ cc.Class({
 				tower.searchEnemy(this.enemiesList);
 			}
 		}
+
+		// update menu
+		if (this.baseMenu.active) {
+			this.checkMenuResources(this.baseMenu.buildButtons);
+		}
+		if (this.towerMenu.active) {
+			// place holder check also
+		}
 	},
 	
 	// menus
 	callBaseMenu: function (base) {
 		this.closeMenu();
 		this.baseMenu.target = base;
-		// grey out and disable
-		for (let button of this.baseMenu.buildButtons) {
-			let buttonComp = button.getComponent(cc.Button);
-			buttonComp.interactable = true;
-			let labels = [
-				button.getChildByName("gold").getComponent(cc.Label),
-				button.getChildByName("crystal").getComponent(cc.Label)
-			];
-			let res = global.resources.get();
-			for (let i = 0; i < labels.length; ++i) {
-				if (res[i] < labels[i].string) {
-					labels[i].node.color = labels[i].node.color.fromHEX('#990000');
-					buttonComp.interactable = false;
-				} else {
-					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
-				}
-			}
-		}
+		this.checkMenuResources(this.baseMenu.buildButtons);
 		this.popMenu(this.baseMenu, base.node.position);
 	},
 
@@ -210,6 +201,27 @@ cc.Class({
     closeMenu: function () {
 		this.baseMenu.active = false;
 		this.towerMenu.active = false;
+	},
+
+	checkMenuResources: function (buttons) {
+		// grey out and disable
+		for (let button of buttons) {
+			let buttonComp = button.getComponent(cc.Button);
+			buttonComp.interactable = true;
+			let labels = [
+				button.getChildByName("gold").getComponent(cc.Label),
+				button.getChildByName("crystal").getComponent(cc.Label)
+			];
+			let res = global.resources.get();
+			for (let i = 0; i < labels.length; ++i) {
+				if (res[i] < labels[i].string) {
+					labels[i].node.color = labels[i].node.color.fromHEX('#990000');
+					buttonComp.interactable = false;
+				} else {
+					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
+				}
+			}
+		}
 	},
 
     start () {
