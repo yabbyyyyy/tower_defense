@@ -73,6 +73,7 @@ cc.Class({
 	},
 	
 	sellTower: function () {
+		global.resources.add(this.tower.sellReturn(), true, this.node.position);
 		this.tower.node.destroy();
 		this.tower = undefined;
 		this.setState(BaseState.Empty);

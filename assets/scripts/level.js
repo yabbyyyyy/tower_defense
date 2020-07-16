@@ -57,25 +57,9 @@ cc.Class({
 		this.baseMenu.buildButtons = this.baseMenu.getChildByName("buttons").getChildren();
 		for (let button of this.baseMenu.buildButtons) {
 			if (towerConf.hasOwnProperty(button.name)) {
-				let tower = towerConf[button.name];
+				let cost = towerConf[button.name].levels[0].cost;
 				button.active = true;
-				let labels = [
-					button.getChildByName("gold").getComponent(cc.Label),
-					button.getChildByName("crystal").getComponent(cc.Label),
-				];
-				let cost = tower.levels[0].cost;
-				for (let i = 0; i < cost.length; ++i) {
-					labels[i].node.active = true;
-					labels[i].string = cost[i];
-					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
-					if (cost[i] == 0) {
-						labels[i].node.active = false;
-					}
-				}
-				// move up 50 for the space of crsytal resource label
-				if (labels[1].node.active) {
-					labels[0].node.position = labels[0].node.position.add(cc.v2(0, 50));
-				}
+				this.setButtonCost(button, cost);
 			} else {
 				button.active = false;
 			}
@@ -84,6 +68,8 @@ cc.Class({
 		this.baseMenu.parent = this.node;
 
 		this.towerMenu = cc.instantiate(this.towerMenuPrefab);
+		this.towerMenu.upgradeButton = this.towerMenu.getChildByName("buttons").getChildByName("upgrade");
+		this.towerMenu.sellButton = this.towerMenu.getChildByName("buttons").getChildByName("sell");
 		this.towerMenu.active = false;
 		this.towerMenu.parent = this.node;
 	},
@@ -167,12 +153,14 @@ cc.Class({
 			}
 		}
 
-		// update menu
+		// update menus
 		if (this.baseMenu.active) {
-			this.checkMenuResources(this.baseMenu.buildButtons);
+			for (let button of this.baseMenu.buildButtons) {
+				this.updateButtonCost(button);
+			}
 		}
 		if (this.towerMenu.active) {
-			// place holder check also
+			this.updateButtonCost(this.towerMenu.upgradeButton);
 		}
 	},
 	
@@ -180,14 +168,67 @@ cc.Class({
 	callBaseMenu: function (base) {
 		this.closeMenu();
 		this.baseMenu.target = base;
-		this.checkMenuResources(this.baseMenu.buildButtons);
+		for (let button of this.baseMenu.buildButtons) {
+			this.updateButtonCost(button);
+		}
 		this.popMenu(this.baseMenu, base.node.position);
+	},
+
+	// set resources label
+	setButtonCost: function (buttonNode, cost) {
+		let labels = [
+			buttonNode.getChildByName("gold").getComponent(cc.Label),
+			buttonNode.getChildByName("crystal").getComponent(cc.Label),
+		];
+		for (let i = 0; i < cost.length; ++i) {
+			labels[i].node.active = (cost[i] > 0);
+			labels[i].string = cost[i];
+		}
+		// move up 50 for the space of crsytal resource label
+		if (labels[1].node.active) {
+			labels[0].node.position = labels[1].node.position.add(cc.v2(0, 50));
+		}
+	},
+
+	// check resources with the cost shown on labels
+	updateButtonCost: function (buttonNode) {
+		if (!buttonNode.active) { return; }
+		let buttonComp = buttonNode.getComponent(cc.Button);
+		buttonComp.interactable = true;
+		let labels = [
+			buttonNode.getChildByName("gold").getComponent(cc.Label),
+			buttonNode.getChildByName("crystal").getComponent(cc.Label)
+		];
+		let res = global.resources.get();
+		for (let i = 0; i < labels.length; ++i) {
+			if (res[i] < labels[i].string) {
+				labels[i].node.color = labels[i].node.color.fromHEX('#990000');
+				buttonComp.interactable = false;
+			} else {
+				labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
+			}
+		}
 	},
 
 	callTowerMenu: function (base, tower) {
 		this.closeMenu();
 		this.towerMenu.target = base;
+		this.updateTowerMenu(tower);
 		this.popMenu(this.towerMenu, base.node.position);
+	},
+
+	updateTowerMenu: function (tower) {
+		// check tower cost
+		let upBut = this.towerMenu.upgradeButton;
+		upBut.active = tower.upgradable();
+
+		// set cost
+		if (upBut.active) {
+			let cost = tower.upgradeCost();
+			this.setButtonCost(upBut, cost);
+		}
+		this.updateButtonCost(upBut);
+		this.setButtonCost(this.towerMenu.sellButton, tower.sellReturn());
 	},
 
 	popMenu: function (menu, pos) {
@@ -201,27 +242,6 @@ cc.Class({
     closeMenu: function () {
 		this.baseMenu.active = false;
 		this.towerMenu.active = false;
-	},
-
-	checkMenuResources: function (buttons) {
-		// grey out and disable
-		for (let button of buttons) {
-			let buttonComp = button.getComponent(cc.Button);
-			buttonComp.interactable = true;
-			let labels = [
-				button.getChildByName("gold").getComponent(cc.Label),
-				button.getChildByName("crystal").getComponent(cc.Label)
-			];
-			let res = global.resources.get();
-			for (let i = 0; i < labels.length; ++i) {
-				if (res[i] < labels[i].string) {
-					labels[i].node.color = labels[i].node.color.fromHEX('#990000');
-					buttonComp.interactable = false;
-				} else {
-					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
-				}
-			}
-		}
 	},
 
     start () {

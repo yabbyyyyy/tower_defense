@@ -6,7 +6,7 @@
         "sprite": "goblin_archer",
         "scale": 1.5,
         "cost": [200, 0],
-        "atk": 5,
+        "atk": 15,
         "crit": 15,
         "crit_mod": 100,
         "range": 300,
@@ -18,19 +18,19 @@
       {
         "sprite": "orc_archer",
         "scale": 1.2,
-        "cost": [300, 3],
-        "atk": 10,
+        "cost": [300, 10],
+        "atk": 25,
         "crit": 30,
-        "aspd": 2.0,
+        "aspd": 2.5,
         "crit_mod": 200
       },
       {
         "sprite": "raydric_archer",
         "scale": 1.2,
-        "cost": [300, 10],
+        "cost": [600, 30],
         "atk_range": 400,
-        "atk": 15,
-        "crit_mod": 300
+        "crit": 60,
+        "crit_mod": 200
       }
     ]
   },
@@ -41,11 +41,11 @@
         "sprite": "faceworm",
         "scale": 1.0,
         "cost": [300, 5],
-        "atk": 50,
+        "atk": 75,
         "range": 600,
         "view": 700,
         "aoe_range": 75,
-        "aspd": 0.15,
+        "aspd": 0.25,
         "bullet_sprite": "stone_shooter_bullet",
         "bullet_scale": 1.5,
         "bullet_speed": 600,
@@ -55,18 +55,20 @@
       {
         "sprite": "boitata",
         "scale": 1.0,
-        "cost": [500, 10],
+        "cost": [500, 30],
         "bullet_scale": 2.5,
-        "atk": 70,
+        "atk": 150,
+        "aspd": 0.35,
         "recover": 1.5,
         "aoe_range": 150
       },
       {
         "sprite": "detale",
         "scale": 1.0,
-        "cost": [500, 25],
+        "cost": [1000, 50],
         "bullet_scale": 3.5,
-        "atk": 90,
+        "atk": 225,
+        "aspd": 0.45,
         "recover": 2.0,
         "aoe_range": 225,
         "atk_range": 700

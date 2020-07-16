@@ -52,13 +52,34 @@ cc.Class({
 
 	upgrade: function () {
 		// cc.log("upgrade_tower " + this.level + ", " + this.spriteFrames.length);
-		this.setLevel(this.level + 1);
+		if (this.upgradable()) {
+			global.resources.cost(this.upgradeCost());
+			this.setLevel(this.level + 1);
+		}
+	},
+
+	upgradable: function () {
+		return (this.level < this.levelData.length - 1);
+	},
+
+	upgradeCost: function () {
+		return this.levelData[this.level + 1].cost;
+	},
+
+	sellReturn: function () {
+		// fully return base level cost
+		let cost = this.levelData[0].cost;
+
+		// each level reduces 20% return
+		for (let i = 1; i <= this.level; ++i) {
+			for (let j = 0; j < cost.length; ++j) {
+				cost[j] += this.levelData[i].cost * (1.0 - 0.2*i);
+			}
+		}
+		return cost;
 	},
 	
 	setLevel: function (level) {
-		if (level >= this.levelData.length) {
-			return false;
-		}
 		this.level = level;
 		let ldata = this.levelData[level];
 
