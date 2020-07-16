@@ -68,12 +68,18 @@ cc.Class({
 
 	sellReturn: function () {
 		// fully return base level cost
-		let cost = this.levelData[0].cost;
+		let cost = [];
+		for (let c of this.levelData[0].cost) {
+			cost.push(c);
+		}
 
 		// each level reduces 20% return
 		for (let i = 1; i <= this.level; ++i) {
-			for (let j = 0; j < cost.length; ++j) {
-				cost[j] += this.levelData[i].cost * (1.0 - 0.2*i);
+			let fac = 1.0 - 0.2*i;
+			// cost += this.levelData[i].cost * fac;
+			// cc.log(cost[0] + ", " + cost[1]);
+			for (let j = 0; j < cost.length && fac > 0; ++j) {
+				cost[j] += this.levelData[i].cost[j] * fac;
 			}
 		}
 		return cost;

@@ -185,8 +185,10 @@ cc.Class({
 			labels[i].string = cost[i];
 		}
 		// move up 50 for the space of crsytal resource label
-		if (labels[1].node.active) {
-			labels[0].node.position = labels[1].node.position.add(cc.v2(0, 50));
+		let ref_pos = labels[labels.length - 1].node.position;
+		for (let i = 1; i < cost.length; ++i) {
+			let j = cost.length - i - 1;
+			labels[j].node.position = ref_pos.add(cc.v2(0, 50*i));
 		}
 	},
 
