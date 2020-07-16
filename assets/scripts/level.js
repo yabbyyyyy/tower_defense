@@ -183,8 +183,10 @@ cc.Class({
 			let res = global.resources.get();
 			for (let i = 0; i < labels.length; ++i) {
 				if (res[i] < labels[i].string) {
-					labels[i].node.color = labels[i].node.color.fromHEX('#990000');;
+					labels[i].node.color = labels[i].node.color.fromHEX('#990000');
 					buttonComp.interactable = false;
+				} else {
+					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
 				}
 			}
 		}
