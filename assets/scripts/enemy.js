@@ -4,6 +4,24 @@ import global from './global'
 var animeComponent = require("animation");
 const UnitState = require("unit_state");
 
+// default properties
+const default_prop = {
+	scale: 1.0,
+	speed: 100,
+	hp: 100,
+	defense: 0,
+	vitality: 1.0,
+};
+
+function update_dict (my_hit, data) {
+	for (var key in my_hit) {
+		if (key in data) {
+			my_hit[key] = data[key];
+		}
+	}
+	return my_hit;
+};
+
 cc.Class({
 	extends: animeComponent,
 
@@ -25,16 +43,13 @@ cc.Class({
 		this.hbar.node.destroy();
 	},
 
-	configure: function (wave, nid, data, pathPoints) {
+	configure: function (wave, nid, data, sprites, pathPoints) {
 		this.wave = wave;
 		this.nid = nid;
 		// basic attributes
-		this.hp = data.hp;
-		this.maxHp = data.hp;
-		this.defense = data.defense;
-		this.speed = data.speed;
-		this.originalSpeed = data.speed;
-		this.vitality = data.vitality;
+		this.prop = update_dict(Object.assign({}, default_prop), data);
+		this.prop.maxHp = this.prop.hp;
+		this.prop.originalSpeed = this.prop.speed;
 		
 		// path and direction
 		this.pathPoints = pathPoints;
@@ -43,7 +58,7 @@ cc.Class({
 		this.findDirection(pathPoints[1].position);
 
 		// initialize animation
-		let size = this.initAnimation(data);
+		let size = this.initAnimation(sprites, this.prop.scale);
 
 		// configure health bar
 		let hbarNode = cc.instantiate(this.healthBarPrefab);
@@ -82,7 +97,7 @@ cc.Class({
 		if (this.state == UnitState.Move) {
 			let dest = this.pathPoints[this.currPt + 1].position;
 			let dist = dest.sub(this.node.position).mag();
-			let moved = dt*this.speed;
+			let moved = dt*this.prop.speed;
 			
 			// cannot reach the next point yet
 			if (dist > moved) {
@@ -110,17 +125,17 @@ cc.Class({
 		if ((damage <= 0) || (this.state == UnitState.Goal) || (this.state == UnitState.Dead)) {
 			return;
 		}
-		this.hp -= damage;
+		this.prop.hp -= damage;
 		this.hbar.node.active = true;
 		this.updateHbarPos();
-		this.hbar.progress = Math.max(this.hp, 0)/this.maxHp;
-		let recover = hitRecover/Math.max(0.05, this.vitality);
+		this.hbar.progress = Math.max(this.prop.hp, 0)/this.prop.maxHp;
+		let recover = hitRecover/Math.max(0.05, this.prop.vitality);
 		if (recover > 0.01) {
-			this.speed = 0;
-			cc.tween(this).to(recover, {speed: this.originalSpeed}, { easing: t => t*t }).start();
+			this.prop.speed = 0;
+			cc.tween(this.prop).to(recover, {speed: this.prop.originalSpeed}, { easing: t => t*t }).start();
 			this.playAnimeOnce(UnitState.Damage, recover);
 		}
-		if (this.hp <= 0) {
+		if (this.prop.hp <= 0) {
 			this.setState(UnitState.Dead);
 		}
 	},

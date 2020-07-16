@@ -1,59 +1,105 @@
 {
 	"level_001": {
 		"life": 10,
-		"resources": [20000, 100],
+		"resources": [200, 0],
 		"waves": [
 			{
-        		"id": "poring",
+        		"monster": {
+				    "sprite": "poring",
+    				"scale": 1.5,
+    				"speed": 80,
+    				"hp": 25
+				},
 				"wait": 0.0,
         		"interval": 1.0,
 				"count": 20,
 				"reward": [10, 0.5]
 			},
 			{
-        		"id": "lunatic",
+        		"monster": {
+					"sprite": "lunatic",
+					"scale": 1.5,
+					"speed": 80,
+					"hp": 50
+				},
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 20,
 				"reward": [15, 0.5]
 			},
 			{
-        		"id": "mantis",
+        		"monster": {
+				    "sprite": "mantis",
+    				"scale": 1.2,
+    				"speed": 100,
+    				"hp": 80,
+    				"defense": 2
+				},
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 20,
 				"reward": [20, 1.0]
 			},
 			{
-        		"id": "wolf",
+				"monster": {
+					"sprite": "wolf",
+					"scale": 1.2,
+					"speed": 120,
+					"hp": 105,
+					"defense": 5
+				},
 				"wait": 5.0,
         		"interval": 1.0,
 				"count": 30,
 				"reward": [25, 1.5]
 			},
 			{
-        		"id": "majoruros",
+				"monster": {
+					"sprite": "majoruros",
+					"speed": 35,
+					"hp": 400,
+					"defense": 7,
+					"vitality": 2.0
+				},
 				"wait": 5.0,
         		"interval": 2.5,
 				"count": 40,
 				"reward": [25, 1.5]
 			},
 			{
-        		"id": "marduk",
+        		"monster": {
+				    "sprite": "marduk",
+    				"speed": 70,
+    				"hp": 285,
+    				"defense": 3,
+    				"vitality": 1.5
+				},
 				"wait": 5.0,
         		"interval": 1.5,
 				"count": 25,
 				"reward": [40, 2.0]
 			},
 			{
-        		"id": "owl_duke",
+				"monster": {
+					"sprite": "owl_duke",
+					"speed": 150,
+					"hp": 250,
+					"defense": 2,
+					"vitality": 1.2
+				},
 				"wait": 10.0,
         		"interval": 1.0,
 				"count": 15,
 				"reward": [80, 5.0]
 			},
 			{
-        		"id": "randgris",
+				"monster": {
+					"sprite": "randgris",
+					"speed": 200,
+					"hp": 650,
+					"defense": 8,
+					"vitality": 3.0
+				},
 				"wait": 10.0,
         		"interval": 5.0,
 				"count": 5,

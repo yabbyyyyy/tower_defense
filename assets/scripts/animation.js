@@ -12,7 +12,7 @@ cc.Class({
     },
 
     // LIFE-CYCLE CALLBACKS
-    initAnimation: function (data) {
+    initAnimation: function (data, scale = 1.0) {
         if (!this.sprites) {
             this.sprites = [];
             // 15 subframes
@@ -34,11 +34,7 @@ cc.Class({
             this.direction = cc.v3(0, -1, 0);
         }
         this.animations = data.animations;
-        if (data.scale) {
-            this.scale = data.scale;
-        } else {
-            this.scale = 1.0;
-        }
+        this.scale = scale;
 
         let size = this.frames[0].getOriginalSize();
         return cc.v2(size.width*this.scale, size.height*this.scale);

@@ -20,7 +20,7 @@ cc.Class({
 			for (let asset of assets) {
 				this.configs[asset.name] = asset.json;
 			}
-			this.loadEnemies(this.configs['enemies']);
+			this.loadEnemies(this.configs['levels']);
 			this.loadTowers(this.configs['towers']);
 			this.startLevel(0);
 		});
@@ -31,17 +31,23 @@ cc.Class({
 		// instantiate level
 		let level = cc.instantiate(this.levelPrefabs[lvl]);
 		let levelData = this.configs["levels"][level.name];
-		let enemyData = this.configs['enemies'];
 		let towerData = this.configs['towers'];
-		level.getComponent("level").configure(levelData, enemyData, towerData);
+		level.getComponent("level").configure(levelData, this.monsterRes, towerData);
 		level.parent = this.node;
 		this.currLevel = level;
 	},
 
-	loadEnemies: function (enemies) {
-		for (var tid of Object.keys(enemies)) {
-			let enemy = enemies[tid];
-			this.loadAnimation(enemy, "sprites/" + enemy.sprite);
+	loadEnemies: function (levels) {
+		this.monsterRes = {};
+		for (var lid of Object.keys(levels)) {
+			let waves = levels[lid].waves;
+			for (let wave of waves) {
+				let sprite = wave.monster.sprite;
+				if (!this.monsterRes.hasOwnProperty(sprite)) {
+					this.monsterRes[sprite] = {};
+					this.loadAnimation(this.monsterRes[sprite], "sprites/" + sprite);
+				}
+			}
 		}
 	},
 

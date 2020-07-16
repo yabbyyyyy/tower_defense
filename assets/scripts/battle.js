@@ -48,7 +48,7 @@ const BattleController = function (obj) {
 
     obj.attackOn = function (hit, target, mod = 1.0) {
         if (target) {
-            let damage = hit.atk - target.defense;
+            let damage = hit.atk - target.prop.defense;
             let crit = (hit.crit > 0.) && (Math.random()*100. < hit.crit);
             if (crit) {
                 damage *= (1. + hit.crit_mod/100.);

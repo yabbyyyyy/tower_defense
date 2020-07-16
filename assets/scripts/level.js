@@ -44,11 +44,11 @@ cc.Class({
 		this.node.on(cc.Node.EventType.TOUCH_START, (event) => { this.closeMenu(); });
 	},
 	
-	configure: function (levelConf, enemyConf, towerConf) {
+	configure: function (levelConf, monsterRes, towerConf) {
 		this.life = levelConf.life;
 		global.resources.set(levelConf.resources);
 		this.wavesData = levelConf.waves;
-		this.enemiesData = enemyConf;
+		this.monsterSprites = monsterRes;
 		this.towersData = towerConf;
 		this.enemiesList = [];
 
@@ -82,20 +82,18 @@ cc.Class({
 		this.wave = 0;
 		this.waveTimer = 0;
 		this.enemyCount = 0;
-		// cc.log(JSON.stringify(this.wavesData));
-		// cc.log(JSON.stringify(this.enemiesData));
 		this.currWave = this.wavesData[this.wave];
 	},
 	
 	addEnemy: function () {
 		if (this.enemyCount < this.currWave.count) {
 			let enemy = cc.instantiate(this.enemyPrefab);
-			let enemyData = this.enemiesData[this.currWave.id];
+			let enemyData = this.currWave.monster;
 			let enemyScript = enemy.getComponent("enemy");
 
 			// register enemy with an ID
 			let nid = this.enemiesList.length;
-			enemyScript.configure(this.wave, nid, enemyData, this.routes);
+			enemyScript.configure(this.wave, nid, enemyData, this.monsterSprites[enemyData.sprite], this.routes);
 
 			// add an event for removing this enemy
 			this.enemiesList.push(enemyScript);
@@ -139,7 +137,6 @@ cc.Class({
 			if (newEnemy) {
 				this.waveTimer = 0;
 				this.addEnemy();
-				// cc.log("Wave " + this.wave + ", Enemy " + this.enemyCount + ": " + JSON.stringify(this.enemiesData[this.currWave.id]));
 			}
 		}
 		
