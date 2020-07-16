@@ -13,6 +13,7 @@ cc.Class({
 	
 	buttonClick: function (event, customData) {
 		// cc.log(customData);
+		event.stopPropagation();
 		switch (customData) {
 		case "sell":
 			this.node.target.sellTower();

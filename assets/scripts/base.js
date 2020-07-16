@@ -53,15 +53,23 @@ cc.Class({
     },
     
 	buildTower: function (data) {
+		let towerData = this.levelScript.towersData[data];
+		let cost = towerData.levels[0].cost;
+		if (!global.resources.check(cost)) {
+			return false;
+		}
+		global.resources.cost(cost);
+
 		// use single type for now
 		let tower = cc.instantiate(this.levelScript.towerPrefab);
         // cc.log(data + ", " + JSON.stringify(this.towersData[data]));
 		let towerScript = tower.getComponent("tower");
-        towerScript.configure(this.levelScript.towersData[data], this.node.position);
+        towerScript.configure(towerData, this.node.position);
 		tower.parent = this.levelScript.node;
 		
 		this.setState(BaseState.BuiltTower);
 		this.tower = towerScript;
+		return true;
 	},
 	
 	sellTower: function () {

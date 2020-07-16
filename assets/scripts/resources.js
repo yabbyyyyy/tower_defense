@@ -39,6 +39,24 @@ cc.Class({
         }
     },
 
+    cost: function (res) {
+        for (let i = 0; i < this.resources.length; ++i) {
+            this.resources[i] -= res[i];
+        }
+    },
+
+    get: function () {
+        return this.resources;
+    },
+
+    check: function (res) {
+        for (let i = 0; i < this.resources.length; ++i) {
+            // set a tolerance for Math.floor
+            if (this.resources[i] < res[i]) { return false; }
+        }
+        return true;
+    },
+
     set: function (res) {
         for (let i = 0; i < this.resources.length; ++i) {
             // set a tolerance for Math.floor

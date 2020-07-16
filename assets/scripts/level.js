@@ -1,6 +1,7 @@
 // level script
 import global from './global'
 
+const resColors = ['#FFD700', '#228CFF'];
 
 cc.Class({
     extends: cc.Component,
@@ -50,6 +51,41 @@ cc.Class({
 		this.enemiesData = enemyConf;
 		this.towersData = towerConf;
 		this.enemiesList = [];
+
+		// setup menus
+		this.baseMenu = cc.instantiate(this.baseMenuPrefab);
+		this.baseMenu.buildButtons = this.baseMenu.getChildByName("buttons").getChildren();
+		for (let button of this.baseMenu.buildButtons) {
+			if (towerConf.hasOwnProperty(button.name)) {
+				let tower = towerConf[button.name];
+				button.active = true;
+				let labels = [
+					button.getChildByName("gold").getComponent(cc.Label),
+					button.getChildByName("crystal").getComponent(cc.Label),
+				];
+				let cost = tower.levels[0].cost;
+				for (let i = 0; i < cost.length; ++i) {
+					labels[i].node.active = true;
+					labels[i].string = cost[i];
+					labels[i].node.color = labels[i].node.color.fromHEX(resColors[i]);
+					if (cost[i] == 0) {
+						labels[i].node.active = false;
+					}
+				}
+				// move up 50 for the space of crsytal resource label
+				if (labels[1].node.active) {
+					labels[0].node.position = labels[0].node.position.add(cc.v2(0, 50));
+				}
+			} else {
+				button.active = false;
+			}
+		}
+		this.baseMenu.active = false;
+		this.baseMenu.parent = this.node;
+
+		this.towerMenu = cc.instantiate(this.towerMenuPrefab);
+		this.towerMenu.active = false;
+		this.towerMenu.parent = this.node;
 	},
 	
 	onDestroy: function () {
@@ -135,32 +171,43 @@ cc.Class({
 	// menus
 	callBaseMenu: function (base) {
 		this.closeMenu();
-		let menu = cc.instantiate(this.baseMenuPrefab);
-		menu.target = base;
-		this.popMenu(menu, base.node.position);
+		this.baseMenu.target = base;
+		// grey out and disable
+		for (let button of this.baseMenu.buildButtons) {
+			let buttonComp = button.getComponent(cc.Button);
+			buttonComp.interactable = true;
+			let labels = [
+				button.getChildByName("gold").getComponent(cc.Label),
+				button.getChildByName("crystal").getComponent(cc.Label)
+			];
+			let res = global.resources.get();
+			for (let i = 0; i < labels.length; ++i) {
+				if (res[i] < labels[i].string) {
+					labels[i].node.color = labels[i].node.color.fromHEX('#990000');;
+					buttonComp.interactable = false;
+				}
+			}
+		}
+		this.popMenu(this.baseMenu, base.node.position);
 	},
 
 	callTowerMenu: function (base, tower) {
 		this.closeMenu();
-		let menu = cc.instantiate(this.towerMenuPrefab);
-		menu.target = base;
-		this.popMenu(menu, base.node.position);
+		this.towerMenu.target = base;
+		this.popMenu(this.towerMenu, base.node.position);
 	},
 
 	popMenu: function (menu, pos) {
-		this.menu = menu;
 		menu.controller = this;
 		menu.scale = 0.;
 		menu.position = pos;
-		menu.parent = this.node;
+		menu.active = true;
 		cc.tween(menu).to(0.1, {scale: 0.6}).start();
 	},
 
     closeMenu: function () {
-		if (this.menu) {
-			this.menu.destroy();
-			this.menu = null;
-		}
+		this.baseMenu.active = false;
+		this.towerMenu.active = false;
 	},
 
     start () {
