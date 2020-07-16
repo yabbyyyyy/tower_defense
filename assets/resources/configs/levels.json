@@ -83,9 +83,9 @@
 				"monster": {
 					"sprite": "owl_duke",
 					"speed": 150,
-					"hp": 250,
+					"hp": 300,
 					"defense": 2,
-					"vitality": 1.2
+					"vitality": 5.0
 				},
 				"wait": 10.0,
         		"interval": 1.0,
@@ -96,12 +96,12 @@
 				"monster": {
 					"sprite": "randgris",
 					"speed": 200,
-					"hp": 650,
-					"defense": 8,
+					"hp": 750,
+					"defense": 12,
 					"vitality": 3.0
 				},
 				"wait": 10.0,
-        		"interval": 5.0,
+        		"interval": 10.0,
 				"count": 5,
 				"reward": [300, 20.0]
 			}
