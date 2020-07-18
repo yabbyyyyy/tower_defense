@@ -1,5 +1,6 @@
 // game layer script
-import global from './global'
+// game layer script
+import global from '../utils/global'
 
 cc.Class({
     extends: cc.Component,

@@ -23,10 +23,9 @@ cc.Class({
         // level buttions
         this.levels = this.node.getChildByName("levels").getChildren();
         for (let level of this.levels) {
-            level.getComponent("level_button").setEnabled(true);
+            level.getComponent("level_button").setEnabled(false);
         }
         
-
         // camera events
         this.onTouch = false;
         //Record mouse click status when user clicks

@@ -1,5 +1,5 @@
 // tower script
-import global from './global'
+import global from '../utils/global'
 
 var animeComponent = require("animation");
 const { UnitState } = require("../utils/states");

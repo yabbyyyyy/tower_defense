@@ -1,4 +1,4 @@
-import global from './global'
+import global from '../utils/global'
 
 // tower base script
 const BaseState = {

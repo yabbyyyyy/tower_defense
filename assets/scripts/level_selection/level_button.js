@@ -39,14 +39,14 @@ cc.Class({
         if (!enable) {
             this.number.node.color = this.number.node.color.fromHEX(numberColors[1]);
             for (let star of this.stars) {
-                star.setMaterial(0, cc.MaterialVariant.createWithBuiltin('builtin-2d-gray-sprite'));
+                star.setMaterial(0, cc.MaterialVariant.createWithBuiltin(cc.Material.BUILTIN_NAME.GRAY_SPRITE));
             }
             this.node.getComponent(cc.Button).interactable = false;
         } else {
             this.node.getComponent(cc.Button).interactable = true;
             this.number.node.color = this.number.node.color.fromHEX(numberColors[0]);
             for (let star of this.stars) {
-                star.setMaterial(0, cc.MaterialVariant.createWithBuiltin('builtin-2d-sprite'));
+                star.setMaterial(0, cc.MaterialVariant.createWithBuiltin(cc.Material.BUILTIN_NAME.SPRITE));
             }
         }
 

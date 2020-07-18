@@ -1,5 +1,5 @@
 // bullet script
-import global from "./global"
+import global from '../utils/global'
 
 const { UnitState } = require("../utils/states");
 

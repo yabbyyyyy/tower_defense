@@ -1,6 +1,5 @@
 // ui script
-
-import global from './global'
+import global from '../utils/global'
 
 cc.Class({
     extends: cc.Component,

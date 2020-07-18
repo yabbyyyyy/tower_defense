@@ -1,5 +1,5 @@
 // level script
-import global from './global'
+import global from '../utils/global'
 
 const resColors = ['#FFD700', '#228CFF'];
 
