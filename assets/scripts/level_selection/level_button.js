@@ -28,7 +28,6 @@ cc.Class({
 
     // the functionality depends on the customData and tower's id
 	buttonClick: function (event, customData) {
-        cc.log("clicked " + customData);
         event.stopPropagation();
         if (this.node.controller) {
             this.node.controller.selectLevel(customData);

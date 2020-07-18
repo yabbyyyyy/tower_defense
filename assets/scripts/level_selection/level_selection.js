@@ -1,9 +1,14 @@
 // script to control the level selection scene
+import global from '../utils/global'
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        dialogBox: {
+            default: null,
+            type: cc.Node,
+        },
         camera: {
             default: null,
             type: cc.Camera,
@@ -12,7 +17,7 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad: function () {
         // size and script
         this.cameraControl = this.camera.getComponent("camera_control");
         this.camera.zoomRatio = 2.0;
@@ -23,7 +28,8 @@ cc.Class({
         // level buttions
         this.levels = this.node.getChildByName("levels").getChildren();
         for (let level of this.levels) {
-            level.getComponent("level_button").setEnabled(false);
+            level.controller = this;
+            level.getComponent("level_button").setEnabled(true);
         }
         
         // camera events
@@ -42,11 +48,20 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_END, (event)=>{
             this.onTouch = false;
         });
+
+        // TODO put it on the start
+        global.messages.load("configs/messages");
+    },
+
+    selectLevel: function (customData) {
+        this.dialogBox.getComponent("dialog_box").pop(this.camera.node.position);
     },
 
     start () {
 
     },
 
-    // update (dt) {},
+    update (dt) {
+
+    },
 });
