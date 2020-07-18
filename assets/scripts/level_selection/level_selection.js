@@ -15,9 +15,17 @@ cc.Class({
     onLoad () {
         // size and script
         this.cameraControl = this.camera.getComponent("camera_control");
+        this.camera.zoomRatio = 2.0;
         let canvas = cc.find("Canvas");
         this.node.width = canvas.width;
         this.node.height = canvas.height;
+
+        // level buttions
+        this.levels = this.node.getChildByName("levels").getChildren();
+        for (let level of this.levels) {
+            level.getComponent("level_button").setEnabled(true);
+        }
+        
 
         // camera events
         this.onTouch = false;

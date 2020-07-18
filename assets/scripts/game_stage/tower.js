@@ -2,7 +2,7 @@
 import global from './global'
 
 var animeComponent = require("animation");
-const UnitState = require("unit_state");
+const { UnitState } = require("../utils/states");
 
 // default properties
 const default_prop = {

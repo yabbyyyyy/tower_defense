@@ -1,8 +1,4 @@
 // animation script
-import global from './global'
-
-const UnitState = require("unit_state");
-
 
 cc.Class({
     extends: cc.Component,

@@ -1,4 +1,4 @@
-// state enums
+// state enum
 
 module.exports.UnitState = {
 	Undefined: -1,

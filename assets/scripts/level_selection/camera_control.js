@@ -21,7 +21,6 @@ cc.Class({
         this.mapWidth = this.worldMap.node.width;
         this.mapHeight = this.worldMap.node.height;
         this.camera = this.node.getComponent(cc.Camera);
-        this.camera.zoomRatio = 1.5;
     },
 
     drag: function (event) {
