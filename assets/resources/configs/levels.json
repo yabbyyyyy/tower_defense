@@ -106,5 +106,23 @@
 				"reward": [300, 20.0]
 			}
 		]
+	},
+	"2": {
+		"life": 10,
+		"resources": [200, 0],
+		"waves": [
+			{
+				"monster": {
+					"sprite": "spider",
+					"scale": 1.5,
+					"speed": 80,
+					"hp": 25
+				},
+				"wait": 0.0,
+				"interval": 1.0,
+				"count": 5,
+				"reward": [10, 0.5]
+			}
+		]
 	}
 }

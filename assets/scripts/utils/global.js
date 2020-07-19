@@ -7,6 +7,6 @@ global.event = EventListener({});
 global.battle = BattleController({});
 global.messages = Messenger;
 // default
-global.currLevel = 1;
+global.currLevel = 2;
 
 export default global;
