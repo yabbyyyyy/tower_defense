@@ -30,7 +30,7 @@ cc.Class({
 	buttonClick: function (event, customData) {
         event.stopPropagation();
         if (this.node.controller) {
-            this.node.controller.selectLevel(customData);
+            this.node.controller.selectLevel(this.node.lid);
         }
 	},
 

@@ -1,4 +1,5 @@
 // a script to control dialog box
+import global from '../utils/global'
 
 cc.Class({
     extends: cc.Component,
@@ -46,7 +47,9 @@ cc.Class({
                 fill.active = false;
             }
         }
-        this.label.string = level;
+        this.label.string = global.messages.get("LEVEL") + " " + level;
+        this.confirmLabel.string = global.messages.get("OK");
+        this.cancelLabel.string = global.messages.get("CANCEL");
         // pop out the dialog box
         this.node.position = pos;        
         this.node.active = true;
@@ -61,7 +64,7 @@ cc.Class({
 
     confirm: function () {
         this.disable();
-        this.node.parent.getComponent("level_selection").startLevel(this.label.string);
+        this.node.parent.getComponent("level_selection").startLevel();
     },
 
     start () {

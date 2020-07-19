@@ -2,8 +2,8 @@
 import global from '../utils/global'
 
 var mySaveData = {
-    level_001: [1, 1, 0],
-    level_002: [0, 0, 0],
+    "1": [1, 1, 0],
+    "2": [0, 0, 0],
 }
 
 cc.Class({
@@ -32,9 +32,10 @@ cc.Class({
 
         // level buttions
         this.levels = this.node.getChildByName("levels").getChildren();
-        for (let level of this.levels) {
-            level.controller = this;
-            level.getComponent("level_button").setEnabled(true);
+        for (let i = 0; i < this.levels.length; ++i) {
+            this.levels[i].lid = i + 1;
+            this.levels[i].controller = this;
+            this.levels[i].getComponent("level_button").setEnabled(true);
         }
         
         // camera events
@@ -58,12 +59,12 @@ cc.Class({
         global.messages.load("configs/messages");
     },
 
-    selectLevel: function (data) {
-        this.dialogBox.getComponent("dialog_box").pop(this.camera.node.position, data, mySaveData[data]);
+    selectLevel: function (level) {
+        global.currLevel = level;
+        this.dialogBox.getComponent("dialog_box").pop(this.camera.node.position, level, mySaveData[level]);
     },
 
-    startLevel: function (name) {
-        cc.log(name);
+    startLevel: function () {
         cc.director.loadScene("game_stage", (err, scene) => {
             if (err) { cc.log(err); return; }
              cc.director.runScene(scene);

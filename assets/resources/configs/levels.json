@@ -1,5 +1,5 @@
 {
-	"level_001": {
+	"1": {
 		"life": 10,
 		"resources": [200, 0],
 		"waves": [

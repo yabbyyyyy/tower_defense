@@ -1,5 +1,4 @@
 // game layer script
-// game layer script
 import global from '../utils/global'
 
 cc.Class({
@@ -21,33 +20,31 @@ cc.Class({
 			for (let asset of assets) {
 				this.configs[asset.name] = asset.json;
 			}
-			this.loadEnemies(this.configs['levels']);
+			this.loadEnemies(this.configs['levels'][global.currLevel]);
 			this.loadTowers(this.configs['towers']);
-			this.startLevel(0);
+			this.startLevel(global.currLevel);
 		});
 		global.battle.game = this;
 	},
 
 	startLevel: function (lvl) {
 		// instantiate level
-		let level = cc.instantiate(this.levelPrefabs[lvl]);
-		let levelData = this.configs["levels"][level.name];
+		let level = cc.instantiate(this.levelPrefabs[0]);
+		let levelData = this.configs["levels"][lvl];
 		let towerData = this.configs['towers'];
 		level.getComponent("level").configure(levelData, this.monsterRes, towerData);
 		level.parent = this.node;
 		this.currLevel = level;
 	},
 
-	loadEnemies: function (levels) {
+	loadEnemies: function (level) {
 		this.monsterRes = {};
-		for (var lid of Object.keys(levels)) {
-			let waves = levels[lid].waves;
-			for (let wave of waves) {
-				let sprite = wave.monster.sprite;
-				if (!this.monsterRes.hasOwnProperty(sprite)) {
-					this.monsterRes[sprite] = {};
-					this.loadAnimation(this.monsterRes[sprite], "sprites/" + sprite);
-				}
+		let waves = level.waves;
+		for (let wave of waves) {
+			let sprite = wave.monster.sprite;
+			if (!this.monsterRes.hasOwnProperty(sprite)) {
+				this.monsterRes[sprite] = {};
+				this.loadAnimation(this.monsterRes[sprite], "sprites/" + sprite);
 			}
 		}
 	},
