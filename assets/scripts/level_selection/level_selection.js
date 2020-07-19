@@ -1,6 +1,11 @@
 // script to control the level selection scene
 import global from '../utils/global'
 
+var mySaveData = {
+    level_001: [1, 1, 0],
+    level_002: [0, 0, 0],
+}
+
 cc.Class({
     extends: cc.Component,
 
@@ -53,8 +58,16 @@ cc.Class({
         global.messages.load("configs/messages");
     },
 
-    selectLevel: function (customData) {
-        this.dialogBox.getComponent("dialog_box").pop(this.camera.node.position);
+    selectLevel: function (data) {
+        this.dialogBox.getComponent("dialog_box").pop(this.camera.node.position, data, mySaveData[data]);
+    },
+
+    startLevel: function (name) {
+        cc.log(name);
+        cc.director.loadScene("game_stage", (err, scene) => {
+            if (err) { cc.log(err); return; }
+             cc.director.runScene(scene);
+        });
     },
 
     start () {
