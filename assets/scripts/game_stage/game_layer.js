@@ -4,10 +4,7 @@ import global from '../utils/global'
 cc.Class({
     extends: cc.Component,
     properties: {
-		levelPrefabs: {
-			default: [],
-			type: cc.Prefab
-		},
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -15,7 +12,7 @@ cc.Class({
     onLoad: function () {
 		// load configurations
 		cc.resources.loadDir("configs", cc.JsonAsset, (err, assets) => {
-			if (err) { cc.log(err); return ; }
+			if (err) { cc.log(err); return; }
 			this.configs = {};
 			for (let asset of assets) {
 				this.configs[asset.name] = asset.json;
@@ -29,12 +26,15 @@ cc.Class({
 
 	startLevel: function (lvl) {
 		// instantiate level
-		let level = cc.instantiate(this.levelPrefabs[0]);
-		let levelData = this.configs["levels"][lvl];
-		let towerData = this.configs['towers'];
-		level.getComponent("level").configure(levelData, this.monsterRes, towerData);
-		level.parent = this.node;
-		this.currLevel = level;
+		cc.resources.load("levels/level_" + lvl, (err, prefab) => {
+			if (err) { cc.log(err); return; }
+			let level = cc.instantiate(prefab);
+			let levelData = this.configs["levels"][lvl];
+			let towerData = this.configs['towers'];
+			level.getComponent("level").configure(levelData, this.monsterRes, towerData);
+			level.parent = this.node;
+			this.currLevel = level;	
+		});
 	},
 
 	loadEnemies: function (level) {

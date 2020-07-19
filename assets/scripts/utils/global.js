@@ -6,5 +6,7 @@ const global = global || {};
 global.event = EventListener({});
 global.battle = BattleController({});
 global.messages = Messenger;
+// default
+global.currLevel = 1;
 
 export default global;
