@@ -113,16 +113,112 @@
 		"waves": [
 			{
 				"monster": {
-					"sprite": "spider",
-					"scale": 1.5,
+					"sprite": "Characters11",
+					"scale": 0.5,
 					"speed": 80,
 					"hp": 25
 				},
 				"wait": 0.0,
 				"interval": 1.0,
-				"count": 5,
+				"count": 20,
 				"reward": [10, 0.5]
+			},
+			{
+				"monster": {
+					"sprite": "Characters12",
+					"scale": 0.5,
+					"speed": 80,
+					"hp": 50
+				},
+				"wait": 5.0,
+				"interval": 1.0,
+				"count": 20,
+				"reward": [15, 0.5]
+			},
+			{
+				"monster": {
+					"sprite": "Characters13",
+					"scale": 0.5,
+					"speed": 100,
+					"hp": 80,
+					"defense": 2
+				},
+				"wait": 5.0,
+				"interval": 1.0,
+				"count": 20,
+				"reward": [20, 1.0]
+			},
+			{
+				"monster": {
+					"sprite": "Characters14",
+					"scale": 0.5,
+					"speed": 120,
+					"hp": 105,
+					"defense": 5
+				},
+				"wait": 5.0,
+				"interval": 1.0,
+				"count": 30,
+				"reward": [25, 1.5]
+			},
+			{
+				"monster": {
+					"sprite": "Characters15",
+					"scale": 0.5,
+					"speed": 35,
+					"hp": 400,
+					"defense": 7,
+					"vitality": 2.0
+				},
+				"wait": 5.0,
+				"interval": 2.5,
+				"count": 40,
+				"reward": [25, 1.5]
+			},
+			{
+				"monster": {
+					"sprite": "Characters16",
+					"scale": 0.5,
+					"speed": 70,
+					"hp": 285,
+					"defense": 3,
+					"vitality": 1.5
+				},
+				"wait": 5.0,
+				"interval": 1.5,
+				"count": 25,
+				"reward": [40, 2.0]
+			},
+			{
+				"monster": {
+					"sprite": "Characters17",
+					"scale": 0.5,
+					"speed": 150,
+					"hp": 300,
+					"defense": 2,
+					"vitality": 5.0
+				},
+				"wait": 10.0,
+				"interval": 1.0,
+				"count": 15,
+				"reward": [80, 5.0]
+			},
+			{
+				"monster": {
+					"sprite": "Characters20",
+					"scale": 0.5,
+					"speed": 200,
+					"hp": 750,
+					"defense": 12,
+					"vitality": 3.0
+				},
+				"wait": 10.0,
+				"interval": 10.0,
+				"count": 5,
+				"reward": [300, 20.0]
 			}
 		]
 	}
+
+
 }

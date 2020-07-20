@@ -3,7 +3,7 @@
     "element": "fire",
     "levels": [
       {
-        "sprite": "goblin_archer",
+        "sprite": "fire-1",
         "scale": 1.5,
         "cost": [200, 0],
         "atk": 15,
@@ -16,8 +16,8 @@
         "bullet_speed": 800
       },
       {
-        "sprite": "orc_archer",
-        "scale": 1.2,
+        "sprite": "fire-2",
+        "scale": 2.0,
         "cost": [300, 10],
         "atk": 20,
         "crit": 30,
@@ -27,8 +27,8 @@
         "crit_mod": 200
       },
       {
-        "sprite": "raydric_archer",
-        "scale": 1.2,
+        "sprite": "fire-3",
+        "scale": 2.5,
         "cost": [600, 30],
         "atk_range": 450,
         "view": 550,
@@ -41,8 +41,8 @@
     "element": "fire",
     "levels": [
       {
-        "sprite": "faceworm",
-        "scale": 1.0,
+        "sprite": "stone-1",
+        "scale": 1.5,
         "cost": [300, 5],
         "atk": 75,
         "range": 600,
@@ -56,8 +56,8 @@
         "lock": false
       },
       {
-        "sprite": "boitata",
-        "scale": 1.0,
+        "sprite": "stone-2",
+        "scale": 2.0,
         "cost": [500, 30],
         "bullet_scale": 2.5,
         "atk": 150,
@@ -66,9 +66,50 @@
         "aoe_range": 150
       },
       {
-        "sprite": "detale",
-        "scale": 1.0,
+        "sprite": "stone-3",
+        "scale": 2.5,
         "cost": [1000, 50],
+        "bullet_scale": 3.5,
+        "atk": 225,
+        "aspd": 0.45,
+        "recover": 2.0,
+        "aoe_range": 225,
+        "atk_range": 700
+      }
+    ]
+  },
+  "TowerC": {
+    "element": "fire",
+    "levels": [
+      {
+        "sprite": "water-1",
+        "scale": 1.5,
+        "cost": [100, 0],
+        "atk": 75,
+        "range": 600,
+        "view": 700,
+        "aoe_range": 75,
+        "aspd": 0.25,
+        "bullet_sprite": "stone_shooter_bullet",
+        "bullet_scale": 1.5,
+        "bullet_speed": 600,
+        "recover": 1.0,
+        "lock": false
+      },
+      {
+        "sprite": "water-2",
+        "scale": 2.0,
+        "cost": [100, 0],
+        "bullet_scale": 2.5,
+        "atk": 150,
+        "aspd": 0.35,
+        "recover": 1.5,
+        "aoe_range": 150
+      },
+      {
+        "sprite": "water-3",
+        "scale": 2.5,
+        "cost": [100, 0],
         "bullet_scale": 3.5,
         "atk": 225,
         "aspd": 0.45,
